@@ -1,0 +1,75 @@
+
+sw-a1-011#terminal length 0
+sw-a1-011#show version
+HP-3800-24G uptime is 12 weeks, 3 days
+System returned to ROM by reload
+System image file is "flash:/images/HP-3800-24G
+
+sw-a1-011#show interfaces status
+Port      Name      Status       Vlan       Duplex  Speed Type
+Gi1/0/1              notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/2              connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/3              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/4              notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/5              notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/6              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/7              connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/8              notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/9              connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/10             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/11             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/12             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/13             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/14             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/15             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/16             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/17             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/18             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/19             notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/20             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/21             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/22             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/23             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/24             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+
+sw-a1-011#show vlan
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/1, Gi1/0/2
+10   DATA                             active    Gi1/0/7, Gi1/0/8
+20   VOICE                            active    Gi1/0/9
+
+sw-a1-011#show mac address-table count
+Dynamic Address Counts:
+  Total Mac Addresses for this criterion: 336
+
+sw-a1-011#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  203.0.113.4        YES NVRAM  up                    up
+Vlan10                 198.18.46.1      YES NVRAM  up                    up
+
+sw-a1-011#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  198.18.27.203       6     0200000ba6e3  ARPA   Vlan10
+Internet  198.18.28.129      75     0200000ba6e4  ARPA   Vlan10
+Internet  198.18.5.31       72     0200000ba6e5  ARPA   Vlan10
+Internet  198.18.48.12        8     0200000ba6e6  ARPA   Vlan10
+Internet  198.18.34.100       2     0200000ba6e7  ARPA   Vlan10
+
+sw-a1-011#show ip route
+Gateway of last resort is 203.0.113.4 to network 0.0.0.0
+S*    0.0.0.0/0 [1/0] via 203.0.113.4
+C     198.18.0.0/24 is directly connected, Vlan10
+
+sw-a1-011#show cdp neighbors detail
+Device ID: SW-NEIGHBOUR.example.lab
+  IP address: 203.0.113.4
+  Platform: HP-3800-24G, Capabilities: Switch
+  Interface: GigabitEthernet1/0/1, Port ID (outgoing port): GigabitEthernet1/0/24
+
+sw-a1-011#show lldp neighbors detail
+Chassis id: 0200.0000.00aa
+System Name: sw-peer.example.lab
+Management Addresses: 203.0.113.4
+
+sw-a1-011#

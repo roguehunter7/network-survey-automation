@@ -1,0 +1,29 @@
+[
+  {
+    "local_switch_serial_number": "SYNC0000034",
+    "local_switch_hostname": "sw-c1-034",
+    "uplink_to_serial_number": "SYNB0000025",
+    "uplink_to_hostname": "sw-b1-025",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNB0000025",
+    "local_switch_hostname": "sw-b1-025",
+    "uplink_to_serial_number": "SYNC0000034",
+    "uplink_to_hostname": "sw-c1-034",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNC0000038",
+    "local_switch_hostname": "sw-c2-038",
+    "uplink_to_serial_number": "SYNB0000025",
+    "uplink_to_hostname": "sw-b1-025",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  }
+]

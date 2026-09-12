@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "Privileged",
+  "device_type": "Switch",
+  "final_hostname": "sw-c2-042",
+  "final_serial_number": "SYNC0000042",
+  "final_make": "D-Link",
+  "final_model": "DXS-1800-28P",
+  "is_poe_capable": 1,
+  "final_rack_type_detail": "Server",
+  "final_site": "SITE-C",
+  "final_building": "BLD-2",
+  "final_floor": "Ground Floor",
+  "final_wing": "North Wing",
+  "final_area_name": "Calibration Lab",
+  "final_location_notes": "Top of rack"
+}

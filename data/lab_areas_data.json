@@ -1,0 +1,194 @@
+[
+  {
+    "site": "SITE-A",
+    "building": "BLD-1",
+    "floor": "Ground Floor",
+    "wing": "Nil",
+    "lab_area_name": "Power Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-A",
+    "building": "BLD-1",
+    "floor": "First Floor",
+    "wing": "Nil",
+    "lab_area_name": "Robotics Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-A",
+    "building": "BLD-1",
+    "floor": "Second Floor",
+    "wing": "Nil",
+    "lab_area_name": "Data Centre",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-A",
+    "building": "BLD-1",
+    "floor": "Second Floor",
+    "wing": "South Wing",
+    "lab_area_name": "Telemetry Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-A",
+    "building": "BLD-1",
+    "floor": "Third Floor",
+    "wing": "Nil",
+    "lab_area_name": "Reliability Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-A",
+    "building": "BLD-1",
+    "floor": "Third Floor",
+    "wing": "South Wing",
+    "lab_area_name": "Optics Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-A",
+    "building": "BLD-2",
+    "floor": "Ground Floor",
+    "wing": "Nil",
+    "lab_area_name": "Development Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-A",
+    "building": "BLD-2",
+    "floor": "First Floor",
+    "wing": "Nil",
+    "lab_area_name": "Display Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-B",
+    "building": "BLD-1",
+    "floor": "Ground Floor",
+    "wing": "Nil",
+    "lab_area_name": "Thermal Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-B",
+    "building": "BLD-1",
+    "floor": "First Floor",
+    "wing": "Nil",
+    "lab_area_name": "Prototyping Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-B",
+    "building": "BLD-1",
+    "floor": "Second Floor",
+    "wing": "Nil",
+    "lab_area_name": "Automation Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-B",
+    "building": "BLD-1",
+    "floor": "Second Floor",
+    "wing": "North Wing",
+    "lab_area_name": "Dynamics Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-B",
+    "building": "BLD-1",
+    "floor": "Third Floor",
+    "wing": "Nil",
+    "lab_area_name": "Materials Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-B",
+    "building": "BLD-1",
+    "floor": "Fourth Floor",
+    "wing": "Nil",
+    "lab_area_name": "Metrology Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-B",
+    "building": "BLD-1",
+    "floor": "Fifth Floor",
+    "wing": "Nil",
+    "lab_area_name": "Diagnostics Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-C",
+    "building": "BLD-1",
+    "floor": "Ground Floor",
+    "wing": "Nil",
+    "lab_area_name": "Server Room",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-C",
+    "building": "BLD-1",
+    "floor": "First Floor",
+    "wing": "Nil",
+    "lab_area_name": "Comms Room",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-C",
+    "building": "BLD-1",
+    "floor": "Second Floor",
+    "wing": "Nil",
+    "lab_area_name": "Integration Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-C",
+    "building": "BLD-1",
+    "floor": "Second Floor",
+    "wing": "West Wing",
+    "lab_area_name": "Electronics Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-C",
+    "building": "BLD-2",
+    "floor": "Ground Floor",
+    "wing": "Nil",
+    "lab_area_name": "Networking Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-C",
+    "building": "BLD-2",
+    "floor": "Ground Floor",
+    "wing": "North Wing",
+    "lab_area_name": "Calibration Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-D",
+    "building": "BLD-1",
+    "floor": "Ground Floor",
+    "wing": "Nil",
+    "lab_area_name": "Control Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-D",
+    "building": "BLD-1",
+    "floor": "First Floor",
+    "wing": "Nil",
+    "lab_area_name": "Validation Lab",
+    "purpose_of_lab": null
+  },
+  {
+    "site": "SITE-D",
+    "building": "BLD-2",
+    "floor": "Ground Floor",
+    "wing": "Nil",
+    "lab_area_name": "Component Lab",
+    "purpose_of_lab": null
+  }
+]

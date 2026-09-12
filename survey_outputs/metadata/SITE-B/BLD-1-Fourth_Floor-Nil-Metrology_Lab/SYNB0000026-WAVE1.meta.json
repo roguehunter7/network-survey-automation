@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "User",
+  "device_type": "Switch",
+  "final_hostname": "sw-b1-026",
+  "final_serial_number": "SYNB0000026",
+  "final_make": "Cisco",
+  "final_model": "CS-2200-48T",
+  "is_poe_capable": 1,
+  "final_rack_type_detail": "Floor",
+  "final_site": "SITE-B",
+  "final_building": "BLD-1",
+  "final_floor": "Fourth Floor",
+  "final_wing": "Nil",
+  "final_area_name": "Metrology Lab",
+  "final_location_notes": "Cabinet 6"
+}

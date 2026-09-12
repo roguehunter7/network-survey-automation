@@ -1,0 +1,20 @@
+[
+  {
+    "local_switch_serial_number": "SYNA0000013",
+    "local_switch_hostname": "sw-a2-013",
+    "uplink_to_serial_number": "SYNC0000036",
+    "uplink_to_hostname": "sw-c1-036",
+    "uplink_role": "Core",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNC0000036",
+    "local_switch_hostname": "sw-c1-036",
+    "uplink_to_serial_number": "SYNA0000013",
+    "uplink_to_hostname": "sw-a2-013",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  }
+]

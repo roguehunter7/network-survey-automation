@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Network Survey Workflow - Field to Report",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1500,
+      1240
+    ],
+    "views": [
+      {
+        "id": "capture",
+        "label": "Capture and package",
+        "focus": [
+          "gui",
+          "logs",
+          "processor"
+        ],
+        "note": "Field capture then log packaging for the LLM."
+      },
+      {
+        "id": "extract",
+        "label": "Extract and review",
+        "focus": [
+          "gemini",
+          "validated",
+          "review"
+        ],
+        "note": "Staged extraction with a human review gate."
+      },
+      {
+        "id": "store",
+        "label": "Ingest and output",
+        "focus": [
+          "warehouse"
+        ],
+        "note": "Everything lands in the warehouse for diagrams and reports."
+      }
+    ]
+  },
+  "lanes": [
+    {
+      "id": "inputs",
+      "label": "Reference data"
+    },
+    {
+      "id": "capture",
+      "label": "Capture"
+    },
+    {
+      "id": "package",
+      "label": "Package"
+    },
+    {
+      "id": "process",
+      "label": "Process"
+    },
+    {
+      "id": "extract",
+      "label": "Extract"
+    },
+    {
+      "id": "review",
+      "label": "Review"
+    },
+    {
+      "id": "governance",
+      "label": "Governance"
+    },
+    {
+      "id": "ingest",
+      "label": "Warehouse"
+    }
+  ],
+  "phases": [
+    {
+      "id": "p0",
+      "label": "1 Capture",
+      "fromCol": 0,
+      "toCol": 0
+    },
+    {
+      "id": "p1",
+      "label": "2 Package",
+      "fromCol": 1,
+      "toCol": 1
+    },
+    {
+      "id": "p2",
+      "label": "3 Process",
+      "fromCol": 2,
+      "toCol": 2
+    },
+    {
+      "id": "p3",
+      "label": "4 Extract",
+      "fromCol": 3,
+      "toCol": 3
+    },
+    {
+      "id": "p4",
+      "label": "5 Review",
+      "fromCol": 4,
+      "toCol": 4
+    },
+    {
+      "id": "p5",
+      "label": "6 Ingest",
+      "fromCol": 5,
+      "toCol": 5
+    }
+  ],
+  "mainPath": [
+    "gui",
+    "logs",
+    "processor",
+    "gemini",
+    "validated",
+    "review",
+    "warehouse"
+  ],
+  "nodes": [
+    {
+      "id": "refdata",
+      "lane": "inputs",
+      "col": 0,
+      "type": "database",
+      "label": "Ref data",
+      "sublabel": "areas, MOONIDs"
+    },
+    {
+      "id": "gui",
+      "lane": "capture",
+      "col": 0,
+      "type": "frontend",
+      "label": "Survey GUI",
+      "sublabel": "wave 1 + 2"
+    },
+    {
+      "id": "logs",
+      "lane": "package",
+      "col": 1,
+      "type": "database",
+      "label": "Logs",
+      "sublabel": "metadata + CLI"
+    },
+    {
+      "id": "processor",
+      "lane": "process",
+      "col": 2,
+      "type": "backend",
+      "label": "Processor",
+      "sublabel": "batch + retry"
+    },
+    {
+      "id": "gemini",
+      "lane": "extract",
+      "col": 3,
+      "type": "external",
+      "label": "Gemini API",
+      "sublabel": "3 staged prompts",
+      "tag": "Pydantic"
+    },
+    {
+      "id": "validated",
+      "lane": "review",
+      "col": 4,
+      "type": "database",
+      "label": "Validated",
+      "sublabel": "per-device JSON"
+    },
+    {
+      "id": "review",
+      "lane": "governance",
+      "col": 4,
+      "type": "security",
+      "label": "Review",
+      "sublabel": "human gate"
+    },
+    {
+      "id": "warehouse",
+      "lane": "ingest",
+      "col": 5,
+      "type": "database",
+      "label": "Warehouse",
+      "sublabel": "16 tables"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "refdata",
+      "to": "gui",
+      "variant": "dashed",
+      "role": "branch",
+      "route": "drop",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e2",
+      "from": "gui",
+      "to": "logs",
+      "label": "writes",
+      "role": "main",
+      "route": "drop",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e3",
+      "from": "logs",
+      "to": "processor",
+      "label": "packages",
+      "role": "main",
+      "route": "drop",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e4",
+      "from": "processor",
+      "to": "gemini",
+      "label": "calls",
+      "role": "main",
+      "route": "drop",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e5",
+      "from": "gemini",
+      "to": "validated",
+      "label": "returns",
+      "role": "main",
+      "route": "drop",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 36
+    },
+    {
+      "id": "e6",
+      "from": "validated",
+      "to": "review",
+      "label": "flags",
+      "role": "main",
+      "route": "drop",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e7",
+      "from": "review",
+      "to": "warehouse",
+      "label": "approved",
+      "role": "main",
+      "route": "drop",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "e8",
+      "from": "warehouse",
+      "to": "validated",
+      "label": "MOONID map",
+      "variant": "dashed",
+      "role": "return",
+      "route": "outside-right",
+      "fromSide": "right",
+      "toSide": "right"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Capture",
+      "items": [
+        "GUI enforces one metadata shape",
+        "Logs saved to a deterministic folder"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Extract",
+      "items": [
+        "Staged prompts validated by Pydantic",
+        "Process-pool batching with retries"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Assure",
+      "items": [
+        "Low-confidence items queued for review",
+        "MOONIDs propagated from the FAS"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+RESPONSE DIRECTIVE: STAGE 2 - MAC ADDRESS TABLE EXTRACTION (BATCH MODE). ADHERE STRICTLY.
+
+TASK: Network Device MAC Address Table Extraction
+
+VERSION: STRUCTURED_OUTPUT_V1_STAGE2_MAC
+
+I. STAGE 2 OBJECTIVES & CRITICAL REQUIREMENTS:
+
+1.  **Primary Goal: ACCURATE AND COMPLETE `mac_entries` extraction.**
+    *   Extract all MAC address table entries from the provided console log(s).
+    *   The Gemini API handles final JSON formatting. Provide correct content for the `mac_entries` schema.
+
+1.A. **Batch Processing Awareness:** This stage may be called multiple times for the same device to retrieve all MAC entries. Follow instructions regarding previously processed MACs.
+
+1.B. **Comprehensive Log Consideration:** Analyze the entirety of the provided log(s) to find all MAC table entries.
+
+II. JSON CONTENT GENERATION GUIDANCE (for MAC Entries Output):
+
+1.  **FOCUS ON ACCURATE DATA VALUES:** For each field in Section IV, provide the most accurate value.
+2.  **NO JSON FORMATTING INSTRUCTIONS.**
+3.  **NO EXTRANEOUS TEXT:** Output ONLY a list of `mac_entries` objects, or an empty list `[]` if no new entries are found.
+
+III. MANDATORY DATA STANDARDIZATION RULES (For MAC Entry Values):
+
+*   **MAC Addresses (CRITICAL FORMAT for `mac_entries[].mac_address`):**
+    *   MUST be uppercase hexadecimal characters.
+    *   MUST be colon-separated.
+    *   Example of CORRECT format: `02:00:00:00:11:22`
+    *   Example of INCORRECT format: `02-00-00-00-11-22` or `0200.0000.eeff` or `020000001122`.
+    *   This format is CRITICAL for all MAC addresses extracted in this stage.
+
+IV. TARGET DATA FIELDS & DESCRIPTIONS FOR MAC ENTRIES:
+
+Provide content for the following conceptual fields:
+
+**`mac_entries` (Array of Objects):** /* MAC table entries. */
+    *   `mac_address`: string (Standardized)
+    *   `interface_name`: string (Port or Port-channel)
+    *   `vlan_id`: integer
+    *   `type`: string | null ('DYNAMIC', 'STATIC', etc. Null if N/A.)
+
+V. BATCHING INSTRUCTIONS (CRITICAL FOR THIS STAGE):
+
+*   You will be provided with a list of MAC addresses (between `PREVIOUSLY_PROCESSED_MACS_START` and `PREVIOUSLY_PROCESSED_MACS_END` delimiters in the operational instructions from the calling script) that have already been processed in previous batches for this switch.
+*   **DO NOT include any MAC entries in your current output whose `mac_address` is in that "previously processed" list.**
+*   Aim to return a batch of approximately 100 *new* MAC entries.
+*   **If there are NO MORE NEW MAC entries to send** (i.e., all remaining MACs in the log are in the "previously processed" list, or the MAC table in the log is exhausted), **output an EMPTY JSON LIST: `[]`**. This is the signal that MAC collection is complete.

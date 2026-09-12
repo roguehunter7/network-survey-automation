@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "Privileged",
+  "device_type": "Switch",
+  "final_hostname": "sw-a1-002",
+  "final_serial_number": "SYNA0000002",
+  "final_make": "Aruba",
+  "final_model": "AR-2900-48G",
+  "is_poe_capable": 1,
+  "final_rack_type_detail": "N/A",
+  "final_site": "SITE-A",
+  "final_building": "BLD-1",
+  "final_floor": "First Floor",
+  "final_wing": "Nil",
+  "final_area_name": "Robotics Lab",
+  "final_location_notes": "Rack 20 unit 19"
+}

@@ -1,0 +1,210 @@
+%%%START_LLM_PROMPT_STRUCTURED_OUTPUT_V1%%%
+SYNTHETIC DEMO PACKAGE - fabricated data for the public showcase build.
+%%%END_LLM_PROMPT_STRUCTURED_OUTPUT_V1%%%
+%%%START_META_JSON_CONTENT%%%
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "Privileged",
+  "device_type": "Switch",
+  "final_hostname": "sw-d1-044",
+  "final_serial_number": "SYND0000044",
+  "final_make": "Huawei",
+  "final_model": "HW-5700-28X",
+  "is_poe_capable": 0,
+  "final_rack_type_detail": "Mini",
+  "final_site": "SITE-D",
+  "final_building": "BLD-1",
+  "final_floor": "Ground Floor",
+  "final_wing": "Nil",
+  "final_area_name": "Control Lab",
+  "final_location_notes": "Middle of rack"
+}
+%%%END_META_JSON_CONTENT%%%
+%%%START_FULL_WAVE1_LOG_CONTENT%%%
+
+sw-d1-044#terminal length 0
+sw-d1-044#show version
+HW-5700-28X uptime is 12 weeks, 3 days
+System returned to ROM by reload
+System image file is "flash:/images/HW-5700-28X
+
+sw-d1-044#show interfaces status
+Port      Name      Status       Vlan       Duplex  Speed Type
+Gi1/0/1              connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/2              notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/3              connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/4              notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/5              connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/6              connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/7              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/8              notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/9              connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/10             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/11             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/12             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/13             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/14             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/15             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/16             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/17             notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/18             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/19             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/20             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/21             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/22             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/23             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/24             connected    10         a-full  a-1000 10/100/1000BaseTX
+
+sw-d1-044#show vlan
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/1, Gi1/0/2
+10   DATA                             active    Gi1/0/7, Gi1/0/8
+20   VOICE                            active    Gi1/0/9
+
+sw-d1-044#show mac address-table count
+Dynamic Address Counts:
+  Total Mac Addresses for this criterion: 195
+
+sw-d1-044#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  203.0.113.15        YES NVRAM  up                    up
+Vlan10                 198.18.45.1      YES NVRAM  up                    up
+
+sw-d1-044#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  198.18.8.132     118     020000014254  ARPA   Vlan10
+Internet  198.18.12.123      72     020000014255  ARPA   Vlan10
+Internet  198.18.16.185      77     020000014256  ARPA   Vlan10
+
+sw-d1-044#show ip route
+Gateway of last resort is 203.0.113.15 to network 0.0.0.0
+S*    0.0.0.0/0 [1/0] via 203.0.113.15
+C     198.18.0.0/24 is directly connected, Vlan10
+
+sw-d1-044#show cdp neighbors detail
+Device ID: SW-NEIGHBOUR.example.lab
+  IP address: 203.0.113.15
+  Platform: HW-5700-28X, Capabilities: Switch
+  Interface: GigabitEthernet1/0/1, Port ID (outgoing port): GigabitEthernet1/0/24
+
+sw-d1-044#show lldp neighbors detail
+Chassis id: 0200.0000.00aa
+System Name: sw-peer.example.lab
+Management Addresses: 203.0.113.15
+
+sw-d1-044#
+%%%END_FULL_WAVE1_LOG_CONTENT%%%
+%%%START_SITE_SPECIFIC_MOONID_DATA%%%
+[
+  {
+    "moonid": "MOON100048",
+    "site": "SITE-D",
+    "ip_range_definition": "198.19.23.0/24",
+    "purpose": "SITE-D-CORP-IT-ControlLab",
+    "business_group": "GROUP-09",
+    "vlan_id": 344,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Retired",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100049",
+    "site": "SITE-D",
+    "ip_range_definition": "198.18.24.0/24",
+    "purpose": "SITE-D-CORP-IT-ControlLab",
+    "business_group": "GROUP-02",
+    "vlan_id": 484,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Being built",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100050",
+    "site": "SITE-D",
+    "ip_range_definition": "198.19.24.0/24",
+    "purpose": "SITE-D-CORP-QA-ControlLab",
+    "business_group": null,
+    "vlan_id": 253,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Operational",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100051",
+    "site": "SITE-D",
+    "ip_range_definition": "198.18.25.0/24",
+    "purpose": "SITE-D-CORP-IT-ValidationLab",
+    "business_group": null,
+    "vlan_id": 460,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Operational",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100052",
+    "site": "SITE-D",
+    "ip_range_definition": "198.19.25.0/24",
+    "purpose": "SITE-D-CORP-IT-ValidationLab",
+    "business_group": "GROUP-06",
+    "vlan_id": 316,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Operational",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100053",
+    "site": "SITE-D",
+    "ip_range_definition": "198.18.26.0/24",
+    "purpose": "SITE-D-CORP-ENG-ValidationLab",
+    "business_group": "GROUP-06",
+    "vlan_id": 300,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Retired",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100054",
+    "site": "SITE-D",
+    "ip_range_definition": "198.19.26.0/24",
+    "purpose": "SITE-D-CORP-QA-ComponentLab",
+    "business_group": null,
+    "vlan_id": 26,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Retired",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100055",
+    "site": "SITE-D",
+    "ip_range_definition": "198.18.27.0/24",
+    "purpose": "SITE-D-CORP-QA-ComponentLab",
+    "business_group": null,
+    "vlan_id": 800,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Operational",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100056",
+    "site": "SITE-D",
+    "ip_range_definition": "198.19.27.0/24",
+    "purpose": "SITE-D-CORP-OPS-ComponentLab",
+    "business_group": null,
+    "vlan_id": 640,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Operational",
+    "date_retired": null
+  }
+]
+%%%END_SITE_SPECIFIC_MOONID_DATA%%%

@@ -1,0 +1,99 @@
+
+sw-d2-047#terminal length 0
+sw-d2-047#show version
+AR-2900-48G uptime is 12 weeks, 3 days
+System returned to ROM by reload
+System image file is "flash:/images/AR-2900-48G
+
+sw-d2-047#show interfaces status
+Port      Name      Status       Vlan       Duplex  Speed Type
+Gi1/0/1              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/2              notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/3              connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/4              notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/5              connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/6              connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/7              connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/8              connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/9              connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/10             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/11             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/12             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/13             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/14             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/15             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/16             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/17             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/18             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/19             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/20             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/21             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/22             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/23             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/24             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/25             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/26             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/27             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/28             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/29             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/30             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/31             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/32             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/33             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/34             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/35             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/36             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/37             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/38             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/39             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/40             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/41             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/42             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/43             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/44             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/45             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/46             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/47             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/48             connected    10         a-full  a-1000 10/100/1000BaseTX
+
+sw-d2-047#show vlan
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/1, Gi1/0/2
+10   DATA                             active    Gi1/0/7, Gi1/0/8
+20   VOICE                            active    Gi1/0/9
+
+sw-d2-047#show mac address-table count
+Dynamic Address Counts:
+  Total Mac Addresses for this criterion: 45
+
+sw-d2-047#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  203.0.113.16        YES NVRAM  up                    up
+Vlan10                 198.18.59.1      YES NVRAM  up                    up
+
+sw-d2-047#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  198.18.3.164      84     0200000be984  ARPA   Vlan10
+Internet  198.18.4.23       78     0200000be985  ARPA   Vlan10
+Internet  198.18.24.193      97     0200000be986  ARPA   Vlan10
+Internet  198.18.16.186     114     0200000be987  ARPA   Vlan10
+Internet  198.18.55.180      59     0200000be988  ARPA   Vlan10
+
+sw-d2-047#show ip route
+Gateway of last resort is 203.0.113.16 to network 0.0.0.0
+S*    0.0.0.0/0 [1/0] via 203.0.113.16
+C     198.18.0.0/24 is directly connected, Vlan10
+
+sw-d2-047#show cdp neighbors detail
+Device ID: SW-NEIGHBOUR.example.lab
+  IP address: 203.0.113.16
+  Platform: AR-2900-48G, Capabilities: Switch
+  Interface: GigabitEthernet1/0/1, Port ID (outgoing port): GigabitEthernet1/0/24
+
+sw-d2-047#show lldp neighbors detail
+Chassis id: 0200.0000.00aa
+System Name: sw-peer.example.lab
+Management Addresses: 203.0.113.16
+
+sw-d2-047#

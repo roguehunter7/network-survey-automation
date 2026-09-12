@@ -1,0 +1,72 @@
+
+sw-c1-035#terminal length 0
+sw-c1-035#show version
+HP-2600-24G uptime is 12 weeks, 3 days
+System returned to ROM by reload
+System image file is "flash:/images/HP-2600-24G
+
+sw-c1-035#show interfaces status
+Port      Name      Status       Vlan       Duplex  Speed Type
+Gi1/0/1              notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/2              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/3              connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/4              connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/5              notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/6              connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/7              connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/8              notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/9              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/10             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/11             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/12             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/13             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/14             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/15             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/16             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/17             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/18             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/19             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/20             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/21             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/22             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/23             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/24             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+
+sw-c1-035#show vlan
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/1, Gi1/0/2
+10   DATA                             active    Gi1/0/7, Gi1/0/8
+20   VOICE                            active    Gi1/0/9
+
+sw-c1-035#show mac address-table count
+Dynamic Address Counts:
+  Total Mac Addresses for this criterion: 91
+
+sw-c1-035#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  203.0.113.12        YES NVRAM  up                    up
+Vlan10                 198.18.41.1      YES NVRAM  up                    up
+
+sw-c1-035#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  198.18.15.64       70     02000002661a  ARPA   Vlan10
+Internet  198.18.17.68       54     02000002661b  ARPA   Vlan10
+
+sw-c1-035#show ip route
+Gateway of last resort is 203.0.113.12 to network 0.0.0.0
+S*    0.0.0.0/0 [1/0] via 203.0.113.12
+C     198.18.0.0/24 is directly connected, Vlan10
+
+sw-c1-035#show cdp neighbors detail
+Device ID: SW-NEIGHBOUR.example.lab
+  IP address: 203.0.113.12
+  Platform: HP-2600-24G, Capabilities: Switch
+  Interface: GigabitEthernet1/0/1, Port ID (outgoing port): GigabitEthernet1/0/24
+
+sw-c1-035#show lldp neighbors detail
+Chassis id: 0200.0000.00aa
+System Name: sw-peer.example.lab
+Management Addresses: 203.0.113.12
+
+sw-c1-035#

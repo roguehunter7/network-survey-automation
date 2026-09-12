@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "Privileged",
+  "device_type": "Switch",
+  "final_hostname": "sw-b1-018",
+  "final_serial_number": "SYNB0000018",
+  "final_make": "HP",
+  "final_model": "HP-2600-48G",
+  "is_poe_capable": 0,
+  "final_rack_type_detail": "Server",
+  "final_site": "SITE-B",
+  "final_building": "BLD-1",
+  "final_floor": "First Floor",
+  "final_wing": "Nil",
+  "final_area_name": "Prototyping Lab",
+  "final_location_notes": "Rack 16 unit 26"
+}

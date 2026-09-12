@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "Privileged",
+  "device_type": "Switch",
+  "final_hostname": "sw-a1-009",
+  "final_serial_number": "SYNA0000009",
+  "final_make": "Cisco",
+  "final_model": "CS-2200-48T",
+  "is_poe_capable": 0,
+  "final_rack_type_detail": "Floor",
+  "final_site": "SITE-A",
+  "final_building": "BLD-1",
+  "final_floor": "Third Floor",
+  "final_wing": "Nil",
+  "final_area_name": "Reliability Lab",
+  "final_location_notes": "Wall mounted"
+}

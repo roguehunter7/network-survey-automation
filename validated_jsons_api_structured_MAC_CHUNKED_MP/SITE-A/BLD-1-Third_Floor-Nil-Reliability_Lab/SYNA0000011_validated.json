@@ -1,0 +1,634 @@
+{
+  "switch_details": {
+    "serial_number": "SYNA0000011",
+    "hostname": "sw-a1-011",
+    "model": "HP-3800-24G",
+    "make": "HP",
+    "device_type": "Switch",
+    "base_mac_address": "02:00:00:00:00:0B",
+    "lab_area_name": "Reliability Lab",
+    "floor": "Third Floor",
+    "site": "SITE-A",
+    "building": "BLD-1",
+    "location_notes": "Cabinet 2",
+    "rack_type_detail": "N/A",
+    "access_level": "Privileged",
+    "survey_timestamp": "2025-01-20T00:00:00",
+    "log_filename_validated": "SYNA0000011-WAVE1.txt",
+    "ip_version_routing": "ipv4",
+    "running_config_captured": 0,
+    "is_poe_capable": 0,
+    "handles_internal_vlans": 1,
+    "user_verified_total_ports": 24,
+    "user_verified_used_ports": 7
+  },
+  "interfaces": [
+    {
+      "interface_name": "GigabitEthernet1/0/1",
+      "status": "connected",
+      "vlan": "trunk (native 10)",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/2",
+      "status": "notconnect",
+      "vlan": "20",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/3",
+      "status": "connected",
+      "vlan": "1",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/4",
+      "status": "connected",
+      "vlan": "trunk (native 10)",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Access port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/5",
+      "status": "notconnect",
+      "vlan": "10",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Access port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/6",
+      "status": "connected",
+      "vlan": "trunk (native 10)",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/7",
+      "status": "connected",
+      "vlan": "1",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/8",
+      "status": "connected",
+      "vlan": "1",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Access port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/9",
+      "status": "notconnect",
+      "vlan": "10",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/10",
+      "status": "connected",
+      "vlan": "20",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Access port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/11",
+      "status": "notconnect",
+      "vlan": "trunk (native 10)",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/12",
+      "status": "notconnect",
+      "vlan": "trunk (native 10)",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Access port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/13",
+      "status": "connected",
+      "vlan": "1",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/14",
+      "status": "connected",
+      "vlan": "20",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Access port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/15",
+      "status": "connected",
+      "vlan": "10",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Access port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/16",
+      "status": "notconnect",
+      "vlan": "10",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Access port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/17",
+      "status": "connected",
+      "vlan": "20",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/18",
+      "status": "connected",
+      "vlan": "10",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/19",
+      "status": "connected",
+      "vlan": "30",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Access port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/20",
+      "status": "notconnect",
+      "vlan": "10",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/21",
+      "status": "connected",
+      "vlan": "10",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/22",
+      "status": "connected",
+      "vlan": "10",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/23",
+      "status": "connected",
+      "vlan": "10",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Access port"
+    },
+    {
+      "interface_name": "GigabitEthernet1/0/24",
+      "status": "notconnect",
+      "vlan": "10",
+      "duplex": "full",
+      "speed": "1000M",
+      "type": "GigabitEthernet",
+      "description": "Uplink port"
+    }
+  ],
+  "vlans": [
+    {
+      "vlan_id": 1,
+      "vlan_name": "default",
+      "status": "active",
+      "ports_associated_text": "Gi1/0/1, Gi1/0/2"
+    },
+    {
+      "vlan_id": 10,
+      "vlan_name": "DATA",
+      "status": "active",
+      "ports_associated_text": "Gi1/0/6, Gi1/0/13, Gi1/0/15, Gi1/0/17, Gi1/0/18, Gi1/0/20, Gi1/0/22, Gi1/0/23"
+    },
+    {
+      "vlan_id": 20,
+      "vlan_name": "VOICE",
+      "status": "active",
+      "ports_associated_text": "Gi1/0/5, Gi1/0/8, Gi1/0/9, Gi1/0/11, Gi1/0/12, Gi1/0/16, Gi1/0/20, Gi1/0/21"
+    },
+    {
+      "vlan_id": 30,
+      "vlan_name": "MGMT",
+      "status": "active",
+      "ports_associated_text": "Gi1/0/2, Gi1/0/3, Gi1/0/7, Gi1/0/8, Gi1/0/9, Gi1/0/11, Gi1/0/18, Gi1/0/24"
+    }
+  ],
+  "ip_interfaces": [
+    {
+      "interface_name": "Vlan10",
+      "mac_address": "02:00:00:00:00:0B",
+      "ip_address_with_prefix": "203.0.113.4/24",
+      "status": "up",
+      "protocol_status": "up",
+      "is_management": 1
+    }
+  ],
+  "mac_entries": [
+    {
+      "mac_address": "02:00:00:07:06:2D",
+      "interface_name": "Gi1/0/11",
+      "vlan_id": 30,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:2E",
+      "interface_name": "Gi1/0/2",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:2F",
+      "interface_name": "Gi1/0/17",
+      "vlan_id": 30,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:30",
+      "interface_name": "Gi1/0/2",
+      "vlan_id": 1,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:31",
+      "interface_name": "Gi1/0/20",
+      "vlan_id": 1,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:32",
+      "interface_name": "Gi1/0/21",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:33",
+      "interface_name": "Gi1/0/10",
+      "vlan_id": 30,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:34",
+      "interface_name": "Gi1/0/20",
+      "vlan_id": 30,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:35",
+      "interface_name": "Gi1/0/13",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:36",
+      "interface_name": "Gi1/0/2",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:37",
+      "interface_name": "Gi1/0/15",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:38",
+      "interface_name": "Gi1/0/4",
+      "vlan_id": 30,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:39",
+      "interface_name": "Gi1/0/15",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:3A",
+      "interface_name": "Gi1/0/11",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:3B",
+      "interface_name": "Gi1/0/7",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:3C",
+      "interface_name": "Gi1/0/16",
+      "vlan_id": 10,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:3D",
+      "interface_name": "Gi1/0/5",
+      "vlan_id": 10,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:3E",
+      "interface_name": "Gi1/0/11",
+      "vlan_id": 1,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:3F",
+      "interface_name": "Gi1/0/18",
+      "vlan_id": 10,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:40",
+      "interface_name": "Gi1/0/7",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:41",
+      "interface_name": "Gi1/0/12",
+      "vlan_id": 1,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:42",
+      "interface_name": "Gi1/0/17",
+      "vlan_id": 10,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:43",
+      "interface_name": "Gi1/0/18",
+      "vlan_id": 10,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:44",
+      "interface_name": "Gi1/0/10",
+      "vlan_id": 10,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:45",
+      "interface_name": "Gi1/0/24",
+      "vlan_id": 30,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:46",
+      "interface_name": "Gi1/0/24",
+      "vlan_id": 30,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:47",
+      "interface_name": "Gi1/0/7",
+      "vlan_id": 30,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:48",
+      "interface_name": "Gi1/0/6",
+      "vlan_id": 1,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:49",
+      "interface_name": "Gi1/0/18",
+      "vlan_id": 1,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:4A",
+      "interface_name": "Gi1/0/22",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:4B",
+      "interface_name": "Gi1/0/14",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:4C",
+      "interface_name": "Gi1/0/3",
+      "vlan_id": 10,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:4D",
+      "interface_name": "Gi1/0/11",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:4E",
+      "interface_name": "Gi1/0/24",
+      "vlan_id": 10,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:4F",
+      "interface_name": "Gi1/0/7",
+      "vlan_id": 20,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:50",
+      "interface_name": "Gi1/0/16",
+      "vlan_id": 10,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:51",
+      "interface_name": "Gi1/0/23",
+      "vlan_id": 1,
+      "type": "DYNAMIC"
+    },
+    {
+      "mac_address": "02:00:00:07:06:52",
+      "interface_name": "Gi1/0/2",
+      "vlan_id": 1,
+      "type": "DYNAMIC"
+    }
+  ],
+  "arp_entries": [
+    {
+      "ip_address": "198.19.42.76",
+      "mac_address": "02:00:00:07:06:53",
+      "interface_name": "Vlan10",
+      "vlan_id": 10,
+      "type": "ARPA",
+      "age_in_seconds": 7053
+    },
+    {
+      "ip_address": "198.18.33.17",
+      "mac_address": "02:00:00:07:06:54",
+      "interface_name": "Vlan10",
+      "vlan_id": 10,
+      "type": "ARPA",
+      "age_in_seconds": 4847
+    },
+    {
+      "ip_address": "198.19.22.71",
+      "mac_address": "02:00:00:07:06:55",
+      "interface_name": "Vlan10",
+      "vlan_id": 10,
+      "type": "ARPA",
+      "age_in_seconds": 5321
+    },
+    {
+      "ip_address": "198.19.5.42",
+      "mac_address": "02:00:00:07:06:56",
+      "interface_name": "Vlan10",
+      "vlan_id": 10,
+      "type": "ARPA",
+      "age_in_seconds": 12228
+    },
+    {
+      "ip_address": "198.18.78.94",
+      "mac_address": "02:00:00:07:06:57",
+      "interface_name": "Vlan10",
+      "vlan_id": 10,
+      "type": "ARPA",
+      "age_in_seconds": 3166
+    },
+    {
+      "ip_address": "198.19.58.103",
+      "mac_address": "02:00:00:07:06:58",
+      "interface_name": "Vlan10",
+      "vlan_id": 10,
+      "type": "ARPA",
+      "age_in_seconds": 8362
+    },
+    {
+      "ip_address": "198.19.51.110",
+      "mac_address": "02:00:00:07:06:59",
+      "interface_name": "Vlan10",
+      "vlan_id": 10,
+      "type": "ARPA",
+      "age_in_seconds": 1684
+    }
+  ],
+  "routes": [
+    {
+      "ip_version": "4",
+      "destination_prefix": "0.0.0.0/0",
+      "next_hop_ip": "203.0.113.1",
+      "outgoing_interface": "Vlan10",
+      "metric": 0,
+      "protocol": "Static",
+      "is_default_route": 1
+    },
+    {
+      "ip_version": "4",
+      "destination_prefix": "198.18.0.0/16",
+      "next_hop_ip": null,
+      "outgoing_interface": "Vlan10",
+      "metric": 0,
+      "protocol": "Connected",
+      "is_default_route": 0
+    }
+  ],
+  "moonid_associations": [
+    {
+      "moonid": "MOON100011",
+      "resolution_method": "SVI_IP_Match",
+      "confidence_score": 0.92
+    },
+    {
+      "moonid": "MOON100012",
+      "resolution_method": "SVI_IP_Match",
+      "confidence_score": 0.82
+    }
+  ],
+  "discovered_unassigned_networks": [
+    {
+      "network_prefix": "198.19.11.0/24",
+      "discovery_source_type": "ARP_Unmatched_IP",
+      "discovery_context": "Synthetic discovery event"
+    }
+  ],
+  "neighbors": [
+    {
+      "local_interface_name": "GigabitEthernet1/0/1",
+      "protocol_used": "CDP",
+      "remote_device_id": "02000000000a",
+      "remote_interface_name": "GigabitEthernet1/0/24",
+      "remote_system_name": "sw-a1-010.lab.example.com",
+      "remote_mgmt_address": "198.51.100.4",
+      "remote_model": "CS-3300-48G"
+    },
+    {
+      "local_interface_name": "GigabitEthernet1/0/1",
+      "protocol_used": "CDP",
+      "remote_device_id": "02000000000a",
+      "remote_interface_name": "GigabitEthernet1/0/24",
+      "remote_system_name": "sw-a1-010.lab.example.com",
+      "remote_mgmt_address": "198.51.100.4",
+      "remote_model": "CS-3300-48G"
+    }
+  ],
+  "items_for_review": [
+    {
+      "severity": "Low",
+      "item_path": "switch_details.location_notes",
+      "reason": "Synthetic_Review_Item",
+      "details": "This is fabricated review content used for demonstration."
+    }
+  ]
+}

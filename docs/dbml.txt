@@ -1,0 +1,347 @@
+// =============================================
+// DBML Schema for Network Survey Data (v2.16.0 - Finalized Changes)
+// Changes from v2.15.3:
+// - Added base_mac_address to switches.
+// - Added mac_address to ip_interfaces.
+// - Added is_standard to logged_other_devices and logged_access_points.
+// - Added inter_site_connectivity, internet_access_path, intranet_access_path to lab_areas.
+// - Added relevant indexes for new queryable fields.
+// - Corrected lldp_cdp_neighbors index (removed unique constraint from composite index).
+// Target: Conceptual (for documentation/visualization)
+// =============================================
+
+Table lab_areas { // Pre-populated, Counts added later
+  lab_area_name text [pk, not null, note: 'Specific lab/area name']
+  floor text [pk, not null, note: 'Floor identifier']
+  site text [pk, not null, note: 'Site identifier, e.g., SITE-A, SITE-B']
+  building text [pk, not null, note: 'Specific building within the site, e.g., BLD-1, Main']
+  wing text [not null, default: 'N/A', note: 'Informational wing/section']
+  purpose_of_lab text
+  primary_ssid text
+  cabling_type_uplink text
+  cabling_type_downlink text
+  firewall_present integer
+  firewall_description text
+  // Operator Reported Counts
+  operator_reported_unmanaged_switch_count integer [note: 'Operator estimate for this specific area']
+  operator_reported_ap_count integer [note: 'Operator estimate for this specific area']
+  operator_reported_wired_host_count integer [note: 'Operator estimate for this specific area']
+  operator_reported_wireless_host_count integer [note: 'Operator estimate for this specific area']
+  operator_reported_guest_estimate integer [note: 'Operator estimate for this specific area']
+  // Aggregate Counts (Populated post-analysis)
+  total_failed_access_switch_count integer [note: 'Calculated count of Failed Access switches']
+  total_non_standard_switch_count integer [note: 'Calculated count of Non-Standard managed switches']
+  total_standard_switch_count integer [note: 'Calculated count of Standard managed switches']
+  total_ports_used_in_area integer [note: 'Calculated sum of used ports (all device types)']
+  total_ports_free_in_area integer [note: 'Calculated sum of free ports (all device types)']
+  // Connectivity & Access Paths (Added v2.16.0)
+  inter_site_connectivity integer [note: '(0/1) Does this area directly connect to other sites?']
+  internet_access_path text [note: 'Descriptive path to Internet']
+  intranet_access_path text [note: 'Descriptive path to Intranet']
+}
+
+Table moonid_areas { // Pre-populated
+  moonid text [pk, not null, note: 'MOONID - synthetic network segment identifier']
+  site text [not null, note: 'Site identifier where the MOONID is primarily located']
+  ip_range_definition text [note: 'IP Range(s) CIDR or list']
+  purpose text [note: 'General purpose/MOON-Name']
+  business_group text [note: 'Special business group / business unit (synthetic)']
+  vlan_id integer [note: 'VLAN ID associated with the MOONID']
+  is_moonid_lab integer [default: 0, note: '(0/1)']
+  is_air_gap integer [default: 0, note: '(0/1)']
+  status text [not null, default: 'Operational', note: 'Operational, Being built, Retired, Being retired']
+  date_retired text
+  is_inter_wing integer [note: '(0/1) - Derived']
+  is_inter_floor integer [note: '(0/1) - Derived']
+  is_inter_building integer [note: '(0/1) - Derived']
+
+  indexes {
+     (moonid)
+     (business_group) // business_group was not indexed in create_db.py, kept here for documentation but DB is source of truth
+     (status)
+     (site)
+  }
+}
+
+Table switches { // For Managed Switches/Routers (Populated from validated JSON)
+  serial_number text [pk, not null]
+  hostname text
+  model text [not null]
+  make text [not null]
+  device_type text [not null, default: 'Switch', note: '"Switch" or "Router"']
+  base_mac_address text [note: 'Primary hardware MAC address (Added v2.16.0)']
+  // Location FK components
+  lab_area_name text [not null] // FK Part 1
+  floor text [not null]         // FK Part 2
+  site text [not null]           // FK Part 3
+  building text [not null]       // FK Part 4
+  location_notes text [note: 'Specific Rack/U/Desk/Wing']
+  rack_type_detail text [note: 'Details from GUI (Network, Server, Mini, Other - text)']
+  access_level text [not null, note: 'Privileged, User']
+  ip_version_routing text [note: 'IPv4_Only, IPv6_Active'] // Note: LLM prompt uses 'ipv4', 'ipv6', 'both', 'none'
+  running_config_captured integer [not null, default: 0]
+  is_poe_capable integer [note: '(0/1)']
+  handles_internal_vlans integer [not null, default: 0, note: '(0/1)']
+  log_filename_validated text
+  survey_timestamp text [default: `CURRENT_TIMESTAMP`]
+  user_verified_total_ports integer
+  user_verified_used_ports integer
+  // Classification Columns (Populated post-analysis)
+  is_switch_standard integer [note: '(0/1/NULL) Flag based on standard criteria']
+  uplink_type text [note: 'Type of device switch uplinks to (Core, Distribution, Access, Router, Unknown)']
+
+  indexes {
+     (hostname)
+     (base_mac_address) // Index new field
+     (lab_area_name, floor, site, building) // Index for FK
+     (device_type)
+     (is_switch_standard)
+     (uplink_type)
+  }
+}
+
+Table logged_other_devices { // For Unmanaged/Failed Access/Hubs/Other (Populated from JSON)
+  id integer [pk, increment]
+  log_timestamp text [not null] // Timestamp from JSON log
+  status_reason text [not null, note: 'Unmanaged (No CLI), Hub (Observed), Failed Access (...), Other']
+  // Location Info components
+  lab_area_name text [not null] // FK Part 1
+  floor text [not null]         // FK Part 2
+  site text [not null]           // FK Part 3
+  building text [not null]       // FK Part 4
+  wing text [not null, note: 'Informational wing/section']
+  specific_location_notes text
+  rack_type_detail text [note: 'Details from GUI (Network, Server, Mini, Other - text)']
+  // Reported Device Details (Manual Entry / Best Effort)
+  reported_make text
+  reported_model text
+  reported_serial_number text [note: 'May not be unique/reliable']
+  reported_asset_tag text
+  reported_moonid text [note: 'MOONID reported by user (via CMDB lookup of laptop IP)']
+  observed_laptop_ip text [note: 'Laptop IP observed when connected to device port']
+  // Specific Fields (nullable)
+  failure_reason_detail text [note: 'Details if StatusReason is Failed Access/Other']
+  reported_total_ports integer [note: 'Primarily if StatusReason is Unmanaged/Hub']
+  reported_used_ports integer  [note: 'Primarily if StatusReason is Unmanaged/Hub']
+  // Classification (Added v2.16.0)
+  is_standard integer [note: '(0/1/NULL) Populated by backend analysis (Added v2.16.0)']
+
+  indexes {
+    (status_reason)
+    (lab_area_name, floor, site, building) // Index for FK
+    (reported_serial_number)
+    (reported_moonid)
+    (is_standard) // Index new field
+  }
+}
+
+Table logged_access_points { // For Access Points (Populated from JSON)
+  id integer [pk, increment]
+  log_timestamp text [not null] // Timestamp from JSON log
+  // Location Info components
+  lab_area_name text [not null] // FK Part 1
+  floor text [not null]         // FK Part 2
+  site text [not null]           // FK Part 3
+  building text [not null]       // FK Part 4
+  wing text [not null, note: 'Informational wing/section']
+  specific_location_notes text
+  rack_type_detail text [note: 'Details from GUI (Network, Server, Mini, Other - text)']
+  // Reported Device Details
+  reported_make text
+  reported_model text
+  reported_serial_number text
+  reported_asset_tag text
+  reported_moonid text [note: 'MOONID reported by user (via CMDB lookup of laptop IP)']
+  observed_laptop_ip text [note: 'Laptop IP observed when connected to device port']
+  // AP Specific Fields
+  observed_ssid text
+  mac_address text [note: 'MAC of the AP itself, often on label']
+  // Port counts (Often 1 or 2 for APs)
+  reported_total_ports integer
+  reported_used_ports integer
+  // Uplink Type (Populated post-analysis)
+  uplink_type text [note: 'Type of device AP uplinks to (Access Switch, Router, Unknown)']
+  // Classification (Added v2.16.0)
+  is_standard integer [note: '(0/1/NULL) Populated by backend analysis (Added v2.16.0)']
+
+  indexes {
+    (lab_area_name, floor, site, building) // Index for FK
+    (mac_address)
+    (reported_serial_number)
+    (observed_ssid)
+    (reported_moonid)
+    (uplink_type)
+    (is_standard) // Index new field
+  }
+}
+
+Table switch_moonid_map {
+  id integer [pk, increment]
+  switch_serial_number text [not null] // FK Defined below
+  moonid text [not null] // FK Defined below
+  resolution_method text [not null, note: 'SVI_Match, ARP_VLAN_Match, Neighbor_Inference, etc.']
+  confidence_score real [note: 'Optional 0.0-1.0 confidence']
+
+  indexes {
+     (switch_serial_number, moonid) [unique]
+     (switch_serial_number)
+     (moonid)
+  }
+}
+
+Table interfaces {
+  id integer [pk, increment]
+  switch_serial_number text [not null] // FK Defined below
+  interface_name text [not null]
+  status text
+  vlan text
+  duplex text
+  speed text
+  type text
+  description text
+  is_uplink integer [note: '(0/1), populated by backend analysis']
+
+  indexes {
+     (switch_serial_number, interface_name) [unique]
+     (switch_serial_number)
+     (status)
+  }
+}
+
+Table vlans {
+  id integer [pk, increment]
+  switch_serial_number text [not null] // FK Defined below
+  vlan_id integer [not null]
+  vlan_name text
+  status text
+  ports_associated_text text
+
+  indexes {
+     (switch_serial_number, vlan_id) [unique]
+     (switch_serial_number)
+  }
+}
+
+Table ip_interfaces {
+  id integer [pk, increment]
+  switch_serial_number text [not null] // FK Defined below
+  interface_name text [not null]
+  mac_address text [note: 'MAC address of this L3 interface (Added v2.16.0)']
+  ip_address_with_prefix text [not null]
+  status text
+  protocol_status text
+  is_management integer [note: '(0/1)']
+
+  indexes {
+     (switch_serial_number, interface_name) [unique]
+     (switch_serial_number)
+     (ip_address_with_prefix)
+     (mac_address) // Index new field
+  }
+}
+
+Table mac_address_table {
+  id integer [pk, increment]
+  switch_serial_number text [not null] // FK Defined below
+  mac_address text [not null]
+  interface_name text [not null]
+  vlan_id integer [not null]
+  type text
+  timestamp_learned text [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+     (switch_serial_number)
+     (switch_serial_number, interface_name)
+     (mac_address)
+  }
+}
+
+Table arp_table {
+  id integer [pk, increment]
+  switch_serial_number text [not null] // FK Defined below
+  ip_address text [not null]
+  mac_address text [not null]
+  interface_name text
+  vlan_id integer
+  type text
+  age_in_seconds integer
+  timestamp_learned text [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+     (switch_serial_number)
+     (mac_address)
+     (ip_address)
+  }
+}
+
+Table lldp_cdp_neighbors {
+  id integer [pk, increment]
+  local_switch_serial_number text [not null] // FK Defined below
+  local_interface_name text [not null]
+  protocol_used text [not null]
+  remote_device_id text [not null]
+  remote_interface_name text [not null]
+  remote_system_name text
+  remote_mgmt_address text
+  remote_model text
+  timestamp_discovered text [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+     (local_switch_serial_number, local_interface_name) // Index for querying, NOT unique
+     (remote_device_id)
+  }
+}
+
+Table ip_routing_table {
+  id integer [pk, increment]
+  switch_serial_number text [not null] // FK Defined below
+  ip_version integer [not null, note: '4 or 6']
+  destination_prefix text [not null]
+  next_hop_ip text
+  outgoing_interface text
+  metric integer
+  protocol text
+  is_default_route integer [note: '(0/1)']
+  timestamp_learned text [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+     (switch_serial_number)
+     (switch_serial_number, ip_version, destination_prefix)
+     (is_default_route)
+  }
+}
+
+Table discovered_unassigned_networks {
+  id integer [pk, increment]
+  network_prefix text [unique, not null, note: 'Discovered network CIDR (or /32 for single IP)']
+  discovery_source_type text [not null, note: 'SVI_Unmatched, ARP_Unmatched, Route_Unmatched, Neighbor_IP_Unmatched, LaptopIP_Unmatched_AP, LaptopIP_Unmatched_Unmanaged, etc.']
+  discovery_context text [note: 'Where/how seen (e.g., Switch SN, Interface, Logged Device ID)']
+  first_seen_switch_sn text // FK Defined below
+  requires_investigation integer [not null, default: 1, note: '(0/1)']
+  investigation_notes text
+  timestamp_added text [default: `CURRENT_TIMESTAMP`]
+
+  indexes {
+    (network_prefix)
+  }
+}
+
+Ref switches_location_fk {
+  switches.(lab_area_name, floor, site, building) > lab_areas.(lab_area_name, floor, site, building)
+}
+Ref other_devices_location_fk {
+  logged_other_devices.(lab_area_name, floor, site, building) > lab_areas.(lab_area_name, floor, site, building)
+}
+Ref access_points_location_fk {
+  logged_access_points.(lab_area_name, floor, site, building) > lab_areas.(lab_area_name, floor, site, building)
+}
+Ref map_switch_fk { switch_moonid_map.switch_serial_number > switches.serial_number [delete: cascade] }
+Ref map_moonid_fk { switch_moonid_map.moonid > moonid_areas.moonid }
+Ref interfaces_switch_fk { interfaces.switch_serial_number > switches.serial_number [delete: cascade] }
+Ref vlans_switch_fk { vlans.switch_serial_number > switches.serial_number [delete: cascade] }
+Ref ip_interfaces_switch_fk { ip_interfaces.switch_serial_number > switches.serial_number [delete: cascade] }
+Ref mac_table_switch_fk { mac_address_table.switch_serial_number > switches.serial_number [delete: cascade] }
+Ref arp_table_switch_fk { arp_table.switch_serial_number > switches.serial_number [delete: cascade] }
+Ref neighbors_switch_fk { lldp_cdp_neighbors.local_switch_serial_number > switches.serial_number [delete: cascade] }
+Ref routing_table_switch_fk { ip_routing_table.switch_serial_number > switches.serial_number [delete: cascade] }
+Ref unassigned_switch_fk { discovered_unassigned_networks.first_seen_switch_sn > switches.serial_number [delete: set null] }

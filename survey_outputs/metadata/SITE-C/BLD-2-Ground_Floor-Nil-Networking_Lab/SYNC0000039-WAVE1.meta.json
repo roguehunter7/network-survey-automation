@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "Privileged",
+  "device_type": "Switch",
+  "final_hostname": "sw-c2-039",
+  "final_serial_number": "SYNC0000039",
+  "final_make": "D-Link",
+  "final_model": "DXS-2800-28X",
+  "is_poe_capable": 0,
+  "final_rack_type_detail": "Floor",
+  "final_site": "SITE-C",
+  "final_building": "BLD-2",
+  "final_floor": "Ground Floor",
+  "final_wing": "Nil",
+  "final_area_name": "Networking Lab",
+  "final_location_notes": "Top of rack"
+}

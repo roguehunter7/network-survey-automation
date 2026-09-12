@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "Privileged",
+  "device_type": "Switch",
+  "final_hostname": "sw-d1-044",
+  "final_serial_number": "SYND0000044",
+  "final_make": "Huawei",
+  "final_model": "HW-5700-28X",
+  "is_poe_capable": 0,
+  "final_rack_type_detail": "Mini",
+  "final_site": "SITE-D",
+  "final_building": "BLD-1",
+  "final_floor": "Ground Floor",
+  "final_wing": "Nil",
+  "final_area_name": "Control Lab",
+  "final_location_notes": "Middle of rack"
+}

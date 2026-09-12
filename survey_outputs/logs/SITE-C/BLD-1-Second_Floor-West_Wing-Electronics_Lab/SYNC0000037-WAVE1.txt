@@ -1,0 +1,73 @@
+
+sw-c1-037#terminal length 0
+sw-c1-037#show version
+CS-2200-24T uptime is 12 weeks, 3 days
+System returned to ROM by reload
+System image file is "flash:/images/CS-2200-24T
+
+sw-c1-037#show interfaces status
+Port      Name      Status       Vlan       Duplex  Speed Type
+Gi1/0/1              notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/2              connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/3              connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/4              notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/5              connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/6              connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/7              notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/8              notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/9              connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/10             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/11             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/12             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/13             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/14             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/15             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/16             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/17             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/18             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/19             notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/20             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/21             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/22             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/23             notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/24             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+
+sw-c1-037#show vlan
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/1, Gi1/0/2
+10   DATA                             active    Gi1/0/7, Gi1/0/8
+20   VOICE                            active    Gi1/0/9
+
+sw-c1-037#show mac address-table count
+Dynamic Address Counts:
+  Total Mac Addresses for this criterion: 263
+
+sw-c1-037#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  198.51.100.13        YES NVRAM  up                    up
+Vlan10                 198.18.6.1      YES NVRAM  up                    up
+
+sw-c1-037#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  198.18.25.243      39     0200000bfe1d  ARPA   Vlan10
+Internet  198.18.60.176      66     0200000bfe1e  ARPA   Vlan10
+Internet  198.18.58.250      84     0200000bfe1f  ARPA   Vlan10
+
+sw-c1-037#show ip route
+Gateway of last resort is 198.51.100.13 to network 0.0.0.0
+S*    0.0.0.0/0 [1/0] via 198.51.100.13
+C     198.18.0.0/24 is directly connected, Vlan10
+
+sw-c1-037#show cdp neighbors detail
+Device ID: SW-NEIGHBOUR.example.lab
+  IP address: 198.51.100.13
+  Platform: CS-2200-24T, Capabilities: Switch
+  Interface: GigabitEthernet1/0/1, Port ID (outgoing port): GigabitEthernet1/0/24
+
+sw-c1-037#show lldp neighbors detail
+Chassis id: 0200.0000.00aa
+System Name: sw-peer.example.lab
+Management Addresses: 198.51.100.13
+
+sw-c1-037#

@@ -1,0 +1,65 @@
+[
+  {
+    "local_switch_serial_number": "SYNC0000040",
+    "local_switch_hostname": "sw-c2-040",
+    "uplink_to_serial_number": "SYNC0000038",
+    "uplink_to_hostname": "sw-c2-038",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNC0000041",
+    "local_switch_hostname": "sw-c2-041",
+    "uplink_to_serial_number": "SYNC0000040",
+    "uplink_to_hostname": "sw-c2-040",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNC0000042",
+    "local_switch_hostname": "sw-c2-042",
+    "uplink_to_serial_number": "SYNC0000040",
+    "uplink_to_hostname": "sw-c2-040",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNC0000038",
+    "local_switch_hostname": "sw-c2-038",
+    "uplink_to_serial_number": "SYNC0000040",
+    "uplink_to_hostname": "sw-c2-040",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNC0000039",
+    "local_switch_hostname": "sw-c2-039",
+    "uplink_to_serial_number": "SYNC0000041",
+    "uplink_to_hostname": "sw-c2-041",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNA0000008",
+    "local_switch_hostname": "sw-a1-008",
+    "uplink_to_serial_number": "SYNC0000041",
+    "uplink_to_hostname": "sw-c2-041",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNA0000004",
+    "local_switch_hostname": "sw-a1-004",
+    "uplink_to_serial_number": "SYNC0000042",
+    "uplink_to_hostname": "sw-c2-042",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  }
+]

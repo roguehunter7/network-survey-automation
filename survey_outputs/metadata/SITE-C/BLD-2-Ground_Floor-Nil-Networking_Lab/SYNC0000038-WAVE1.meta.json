@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "Privileged",
+  "device_type": "Switch",
+  "final_hostname": "sw-c2-038",
+  "final_serial_number": "SYNC0000038",
+  "final_make": "D-Link",
+  "final_model": "DXS-1800-28P",
+  "is_poe_capable": 0,
+  "final_rack_type_detail": "Wall",
+  "final_site": "SITE-C",
+  "final_building": "BLD-2",
+  "final_floor": "Ground Floor",
+  "final_wing": "Nil",
+  "final_area_name": "Networking Lab",
+  "final_location_notes": "Middle of rack"
+}

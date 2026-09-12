@@ -1,0 +1,65 @@
+[
+  {
+    "local_switch_serial_number": "SYNA0000015",
+    "local_switch_hostname": "sw-a2-015",
+    "uplink_to_serial_number": "SYNA0000009",
+    "uplink_to_hostname": "sw-a1-009",
+    "uplink_role": "Distribution",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNC0000042",
+    "local_switch_hostname": "sw-c2-042",
+    "uplink_to_serial_number": "SYNA0000012",
+    "uplink_to_hostname": "sw-a1-012",
+    "uplink_role": "Distribution",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNA0000009",
+    "local_switch_hostname": "sw-a1-009",
+    "uplink_to_serial_number": "SYNA0000015",
+    "uplink_to_hostname": "sw-a2-015",
+    "uplink_role": "Core",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYND0000044",
+    "local_switch_hostname": "sw-d1-044",
+    "uplink_to_serial_number": "SYND0000044",
+    "uplink_to_hostname": "sw-d1-044",
+    "uplink_role": "Core",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNA0000012",
+    "local_switch_hostname": "sw-a1-012",
+    "uplink_to_serial_number": "SYND0000044",
+    "uplink_to_hostname": "sw-d1-044",
+    "uplink_role": "Core",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNA0000011",
+    "local_switch_hostname": "sw-a1-011",
+    "uplink_to_serial_number": "SYNA0000010",
+    "uplink_to_hostname": "sw-a1-010",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNA0000010",
+    "local_switch_hostname": "sw-a1-010",
+    "uplink_to_serial_number": "SYNA0000009",
+    "uplink_to_hostname": "sw-a1-009",
+    "uplink_role": "Distribution",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  }
+]

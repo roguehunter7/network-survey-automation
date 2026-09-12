@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "Privileged",
+  "device_type": "Switch",
+  "final_hostname": "sw-b1-028",
+  "final_serial_number": "SYNB0000028",
+  "final_make": "Cisco",
+  "final_model": "CS-3300-48G",
+  "is_poe_capable": 1,
+  "final_rack_type_detail": "Wall",
+  "final_site": "SITE-B",
+  "final_building": "BLD-1",
+  "final_floor": "Fifth Floor",
+  "final_wing": "Nil",
+  "final_area_name": "Diagnostics Lab",
+  "final_location_notes": "Top of rack"
+}

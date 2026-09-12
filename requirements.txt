@@ -1,0 +1,17 @@
+# Core application (GUI + database)
+# tkinter ships with Python on Windows/macOS; on Linux install python3-tk.
+
+# LLM pipeline
+pydantic>=2.6
+google-genai>=1.0
+
+# Diagramming & topology inference
+networkx>=3.2
+pydot>=2.0
+
+# Reporting
+pandas>=2.1
+openpyxl>=3.1
+
+# Optional: human-readable vendor names for external LLDP/CDP neighbours
+mac-vendor-lookup>=0.1.12

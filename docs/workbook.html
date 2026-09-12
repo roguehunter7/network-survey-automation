@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Network Survey Automation - Project Workbook</title>
+<style>
+  :root{
+    --bg:#0f1420; --panel:#161d2c; --panel2:#1d2637; --text:#e6ebf5; --muted:#9aa8c0;
+    --line:#26314a; --accent:#38bdf8; --accent2:#34d399; --violet:#a78bfa; --amber:#fbbf24;
+    --code:#0b1020;
+  }
+  html.light{
+    --bg:#f6f8fc; --panel:#ffffff; --panel2:#eef2f8; --text:#111827; --muted:#556070;
+    --line:#dfe5ef; --accent:#0284c7; --accent2:#059669; --violet:#7c3aed; --amber:#b45309;
+    --code:#f0f3f9;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .layout{display:flex;min-height:100vh}
+  nav{position:sticky;top:0;align-self:flex-start;height:100vh;width:250px;flex:0 0 250px;
+      padding:22px 16px;border-right:1px solid var(--line);background:var(--panel);overflow:auto}
+  nav .brand{font-weight:700;font-size:15px;letter-spacing:.3px;margin-bottom:4px}
+  nav .sub{color:var(--muted);font-size:12px;margin-bottom:16px}
+  nav a{display:block;padding:6px 8px;border-radius:7px;color:var(--muted);font-size:13.5px}
+  nav a:hover{background:var(--panel2);color:var(--text);text-decoration:none}
+  main{flex:1;min-width:0;padding:36px 46px 80px;max-width:1160px}
+  header.hero{border:1px solid var(--line);background:linear-gradient(135deg,var(--panel),var(--panel2));
+      border-radius:16px;padding:32px 34px;margin-bottom:34px}
+  h1{font-size:30px;margin:0 0 10px}
+  .lede{font-size:17px;color:var(--muted);max-width:760px}
+  .badges{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+  .badge{font-size:12px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:var(--bg)}
+  h2{font-size:21px;margin:42px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  h3{font-size:16px;margin:22px 0 6px}
+  p{color:var(--text)}
+  .muted{color:var(--muted)}
+  .grid{display:grid;gap:14px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .card{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:16px 18px}
+  .card .num{font-size:24px;font-weight:700}
+  .card .lbl{color:var(--muted);font-size:12.5px;margin-top:2px}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  code{background:var(--code);padding:1px 6px;border-radius:5px;font-size:13px}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto;font-size:13px}
+  .diagram{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+  .diagram iframe{width:100%;border:0;display:block}
+  .diagram .cap{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+  img.shot{max-width:100%;border:1px solid var(--line);border-radius:12px;background:#fff}
+  .tag{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:6px;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+  ul{color:var(--text)} li{margin:4px 0}
+  .note{border-left:3px solid var(--amber);background:var(--panel);padding:12px 16px;border-radius:0 10px 10px 0;color:var(--muted)}
+  #theme{position:fixed;top:14px;right:16px;z-index:9;border:1px solid var(--line);background:var(--panel);color:var(--text);
+      border-radius:9px;padding:7px 12px;cursor:pointer;font-size:13px}
+  footer{margin-top:60px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
+  @media (max-width:900px){nav{display:none}main{padding:20px}.g3,.g4{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<button id="theme" onclick="toggleTheme()">Light / Dark</button>
+<div class="layout">
+  <nav>
+    <div class="brand">Network Survey Automation</div>
+    <div class="sub">Project workbook - synthetic build</div>
+    <a href="#overview">1. Overview</a>
+    <a href="#problem">2. The problem</a>
+    <a href="#architecture">3. Architecture</a>
+    <a href="#workflow">4. Workflow</a>
+    <a href="#sequence">4b. Staged extraction</a>
+    <a href="#results">5. Results</a>
+    <a href="#data">6. Data model</a>
+    <a href="#llm">7. LLM engineering</a>
+    <a href="#topology">8. Topology inference</a>
+    <a href="#decisions">9. Decision log</a>
+    <a href="#trace">10. Traceability</a>
+    <a href="#run">11. Run it</a>
+    <a href="#privacy">12. Privacy</a>
+  </nav>
+  <main>
+    <header class="hero">
+      <h1>Network Survey Automation</h1>
+      <p class="lede">A toolkit that turns a slow, spreadsheet-driven physical network survey into a
+      repeatable, validated and visualised pipeline. In its production rollout it helped compress a
+      four-month manual survey programme into under two months.</p>
+      <div class="badges">
+        <span class="badge">Python</span><span class="badge">Tkinter</span><span class="badge">SQLite (16 tables)</span>
+        <span class="badge">Gemini + Pydantic</span><span class="badge">NetworkX</span><span class="badge">Graphviz / Pydot</span>
+        <span class="badge">pandas / openpyxl</span>
+      </div>
+    </header>
+
+    <section id="overview">
+      <h2>1. Overview</h2>
+      <p>Physical network surveys are slow and error-prone: an engineer visits every rack and lab, connects a
+      console cable, captures CLI output, then copies values into a spreadsheet. The result is inconsistent
+      between people, hard to audit, and painful to re-run.</p>
+      <p>This project replaces that with four cooperating parts: a guided <strong>field-capture GUI</strong>, a
+      staged <strong>LLM extraction pipeline</strong>, a normalised <strong>SQLite warehouse</strong>, and a
+      <strong>topology inference and reporting</strong> layer. The public build runs entirely on synthetic data.</p>
+      <div class="grid g4" style="margin-top:16px">
+        <div class="card"><div class="num">4</div><div class="lbl">sites / campuses</div></div>
+        <div class="card"><div class="num">~700</div><div class="lbl">managed switches (production)</div></div>
+        <div class="card"><div class="num">100,000+</div><div class="lbl">MAC-table entries (production)</div></div>
+        <div class="card"><div class="num">&lt; 2 mo</div><div class="lbl">vs a 4-month manual baseline</div></div>
+      </div>
+    </section>
+
+    <section id="problem">
+      <h2>2. The problem</h2>
+      <ul>
+        <li><strong>Inconsistent capture.</strong> Every surveyor records location and device data differently.</li>
+        <li><strong>No reliable join key.</strong> Logs and metadata are matched by hand, so files get lost or misfiled.</li>
+        <li><strong>Vendor sprawl.</strong> Cisco, HP, D-Link, Huawei and Aruba all format CLI output differently.</li>
+        <li><strong>Hidden topology.</strong> Some switches sit behind unmanaged hops; many external devices have no hostname.</li>
+        <li><strong>Changing requirements.</strong> The client did not know up front exactly what the survey needed to produce.</li>
+      </ul>
+      <div class="note">That last point matters: the system was built incrementally, and the repository documents
+      that evolution honestly rather than pretending it was designed in one pass.</div>
+    </section>
+
+    <section id="architecture">
+      <h2>3. Architecture</h2>
+      <p>The interactive diagram below is a self-contained viewer (zoom, pan, guided views). It shows how field
+      capture, staged extraction, the warehouse and the analysis layer connect.</p>
+      <div class="diagram">
+        <div class="cap"><span>System architecture</span><a href="diagrams/architecture.html" target="_blank">Open full page</a></div>
+        <iframe src="diagrams/architecture.html" height="820" title="Architecture diagram"></iframe>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <h2>4. Workflow</h2>
+      <p>The seven-phase pipeline from reference data through capture, extraction, human review, ingestion and
+      output. The review gate is deliberate: model uncertainty becomes a targeted human queue.</p>
+      <div class="diagram">
+        <div class="cap"><span>Field-to-report workflow</span><a href="diagrams/workflow.html" target="_blank">Open full page</a></div>
+        <iframe src="diagrams/workflow.html" height="900" title="Workflow diagram"></iframe>
+      </div>
+    </section>
+
+    <section id="sequence">
+      <h2>4b. Staged extraction</h2>
+      <p>How one device is processed: field capture, then three schema-validated prompt stages against the
+      Gemini API, a severity-ranked review queue, and finally a load into the warehouse.</p>
+      <div class="diagram">
+        <div class="cap"><span>Per-device LLM pipeline</span><a href="diagrams/sequence.html" target="_blank">Open full page</a></div>
+        <iframe src="diagrams/sequence.html" height="920" title="Sequence diagram"></iframe>
+      </div>
+    </section>
+
+    <section id="results">
+      <h2>5. Results</h2>
+      <p>The committed demo dataset is generated by <code>tools/generate_synthetic_data.py</code> and flows through
+      the real loaders and diagram engine. The production figures are anonymised.</p>
+      <table>
+        <tr><th>Metric</th><th>Demo build (committed)</th><th>Production rollout (anonymised)</th></tr>
+        <tr><td>Sites</td><td>4</td><td>4</td></tr>
+        <tr><td>Lab areas</td><td>24</td><td>~50</td></tr>
+        <tr><td>MOONIDs</td><td>56</td><td>~250</td></tr>
+        <tr><td>Managed switches</td><td>47</td><td>~700</td></tr>
+        <tr><td>Unmanaged / other devices</td><td>44</td><td>~600</td></tr>
+        <tr><td>MAC-table entries</td><td>2,526</td><td>100,000+</td></tr>
+        <tr><td>Interfaces</td><td>1,584</td><td>~27,000</td></tr>
+        <tr><td>LLDP/CDP adjacencies</td><td>98</td><td>~2,000</td></tr>
+        <tr><td>Diagrams</td><td>43</td><td>~90</td></tr>
+      </table>
+      <h3>Sample generated topology</h3>
+      <p class="muted">One of the synthetic Pydot diagrams, clustered by inferred role.</p>
+      <img class="shot" src="../network_diagrams_pydot_final/pydot_SITE-A_BLD-2_First_Floor_Display_Lab.png" alt="Synthetic topology diagram">
+    </section>
+
+    <section id="data">
+      <h2>6. Data model</h2>
+      <p>A single-file SQLite warehouse with 16 tables, foreign keys, cascades and indexes. Reference data feeds
+      device inventory, which feeds operational detail.</p>
+      <div class="grid g3">
+        <div class="card"><h3>Reference</h3><ul><li>lab_areas</li><li>moonid_areas</li></ul></div>
+        <div class="card"><h3>Inventory</h3><ul><li>switches</li><li>logged_other_devices</li><li>logged_access_points</li><li>switch_moonid_map</li></ul></div>
+        <div class="card"><h3>Operational detail</h3><ul><li>interfaces, vlans, ip_interfaces</li><li>mac_address_table, arp_table</li><li>lldp_cdp_neighbors</li><li>ip_routing_table</li><li>discovered_unassigned_networks</li></ul></div>
+      </div>
+    </section>
+
+    <section id="llm">
+      <h2>7. LLM engineering</h2>
+      <p>Logs are parsed in three stages, each constrained by a Pydantic schema so a malformed response fails
+      loudly instead of poisoning the warehouse.</p>
+      <table>
+        <tr><th>Stage</th><th>Extracts</th><th>Why separate</th></tr>
+        <tr><td>1A</td><td>Device details, interfaces, VLANs, IP interfaces, ARP, routes, neighbours</td><td>Smaller, testable contract</td></tr>
+        <tr><td>1B</td><td>MOONID associations, unassigned networks</td><td>Needs the MOONID reference data</td></tr>
+        <tr><td>2</td><td>MAC address table, chunked into batches</td><td>Hundreds of rows would blow the context</td></tr>
+      </table>
+      <ul>
+        <li>14 Pydantic models validate each stage before acceptance.</li>
+        <li>Items for review are severity-ranked, producing a human work queue instead of blind trust.</li>
+        <li>Process-pool batching with a deliberately low worker count and one retry per device.</li>
+      </ul>
+    </section>
+
+    <section id="topology">
+      <h2>8. Topology inference</h2>
+      <ul>
+        <li><strong>Role inference.</strong> Core / Distribution / Access / Router from inter-switch degree,
+        betweenness centrality and distance to the Floor Access Switch.</li>
+        <li><strong>MAC-based uplinks.</strong> Reconstruct links hidden behind unmanaged hops by comparing
+        per-port MAC sets with Jaccard similarity, plus a relaxed pass for isolated islands.</li>
+        <li><strong>Access-point linking.</strong> Exact MAC match first, then a systematic last-octet variation.</li>
+        <li><strong>MOONID propagation.</strong> Top-down from the FAS so hosts inherit a network identity.</li>
+        <li><strong>Neighbour de-duplication.</strong> A multi-identifier cache merges the same external device.</li>
+      </ul>
+    </section>
+
+    <section id="decisions">
+      <h2>9. Decision log</h2>
+      <p>Sixteen evidence-based decisions (GUI capture, deterministic folders, two waves, SQLite, LLM over TextFSM,
+      staged prompts, Pydantic validation, human review, batching, heuristic topology, FAS anchoring, and the
+      public-release sanitisation) are recorded as ADRs.</p>
+      <p><a href="DECISIONS.md">Read the full decision log</a></p>
+    </section>
+
+    <section id="trace">
+      <h2>10. Traceability</h2>
+      <p>Every artefact from the original working repository is accounted for: ported, renamed, archived under
+      <code>legacy/</code>, regenerated as synthetic data, or explicitly dropped with a reason.</p>
+      <p><a href="TRACEABILITY.md">Read the full traceability matrix</a></p>
+    </section>
+
+    <section id="run">
+      <h2>11. Run it</h2>
+      <p>Rebuild the entire demo (synthetic data, database, diagrams and report):</p>
+      <pre>python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+./run_demo.sh</pre>
+      <p>Or step by step:</p>
+      <pre>python tools/generate_synthetic_data.py --profile small
+python -m netsurvey.db.create_db
+python -m netsurvey.db.load_other_devices_json_to_db
+python -m netsurvey.db.load_validated_json_to_db
+python tools/generate_demo_diagrams.py
+python -m netsurvey.reporting.extract_unassigned_networks</pre>
+    </section>
+
+    <section id="privacy">
+      <h2>12. Privacy</h2>
+      <p>No employer, personal or production data is present. Hostnames use the reserved domain
+      <code>example.com</code>; MAC addresses use the locally-administered prefix <code>02:00:00</code>; IP
+      addresses come only from reserved blocks (RFC 5737 documentation ranges and the RFC 2544 benchmarking
+      range); serials are prefixed <code>SYN</code>; and logs contain no running configuration or credentials.
+      Internal terminology has been generalised to <code>MOONID</code>, <code>business_group</code> and
+      <code>campus_id</code>.</p>
+    </section>
+
+    <footer>
+      Network Survey Automation - project workbook. Heavily sanitised synthetic build, non-commercial license. Built from the original working
+      repository and revalidated end to end.
+    </footer>
+  </main>
+</div>
+<script>
+  function toggleTheme(){
+    var root = document.documentElement;
+    root.classList.toggle('light');
+    try { localStorage.setItem('ns-theme', root.classList.contains('light') ? 'light' : 'dark'); } catch(e){}
+  }
+  (function(){
+    try {
+      if (localStorage.getItem('ns-theme') === 'light') document.documentElement.classList.add('light');
+    } catch(e){}
+  })();
+</script>
+</body>
+</html>

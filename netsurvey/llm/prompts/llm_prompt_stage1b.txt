@@ -1,0 +1,99 @@
+RESPONSE DIRECTIVE: STAGE 1B - COMPLEX NETWORK ASSOCIATIONS. ADHERE STRICTLY.
+
+TASK: Network Device Data Extraction - Stage 1B (Complex Associations & Discovery)
+
+VERSION: STRUCTURED_OUTPUT_V1_STAGE1B
+
+I. STAGE 1B OBJECTIVES & CRITICAL REQUIREMENTS:
+
+1.  **Primary Goal: ACCURATE INFERENCE for `moonid_associations` and `discovered_unassigned_networks`.**
+    *   Data for these fields MUST be derived based on rigorous application of rules using the provided Stage 1A output (as context) and the full device data package.
+    *   If uncertain after applying all rules, use `null` or an empty list as appropriate and flag for review.
+    *   The Gemini API handles JSON formatting. Provide correct content for the Stage 1B schema.
+
+1.A. **Context is Key:** You will be provided with the JSON output from Stage 1A. This data (switch details, interfaces, IPs, routes, etc.) is CRUCIAL context for your Stage 1B task. Use it to inform your `moonid_associations` and `discovered_unassigned_networks` logic.
+
+1.B. **Comprehensive Data Consideration:** Process the original device data package (Metadata, Logs, Site MOONID list) AND the provided Stage 1A JSON output.
+
+II. ANALYTICAL WORKFLOW & DATA PROCESSING (for Stage 1B Fields):
+
+1.  **Understand Stage 1A Context:** Thoroughly analyze the provided Stage 1A JSON output. This is your baseline understanding of the switch's configuration.
+2.  **Correlate with Full Device Data:** Use the Stage 1A context alongside the original logs and site MOONID list to apply the specific logic for `moonid_associations` and `discovered_unassigned_networks` (see Section V).
+3.  **Evidence-Based Inference:** All associations and discoveries must be justifiable by the rules in Section V.
+4.  **Data Standardization (MANDATORY FOR VALUES - see Section III):** Standardize values like network prefixes.
+5.  **Final Internal Verification Pass (CRITICAL for Stage 1B):**
+    *   Review `moonid_associations` and `discovered_unassigned_networks` against the rules and Stage 1A context.
+    *   Check `items_for_review` for accuracy and relevance to Stage 1B tasks or cross-stage inconsistencies.
+    *   Proceed ONLY IF 100% confident in content accuracy for Stage 1B.
+
+III. JSON CONTENT GENERATION GUIDANCE (for Stage 1B Output):
+
+1.  **FOCUS ON ACCURATE DATA VALUES:** For fields in Section IV, provide accurate values or `null`/empty list.
+2.  **NO JSON FORMATTING INSTRUCTIONS.**
+3.  **NO EXTRANEOUS TEXT.** Your output should only contain data for Stage 1B fields.
+
+IV. MANDATORY DATA STANDARDIZATION RULES (For Stage 1B Values):
+*   IP Addresses & Prefixes (CIDR Notation):
+    *   IPv4: A.B.C.D/P (e.g., 192.0.2.10/24).
+    *   IPv6: Standard compressed hex with prefix (e.g., xxxx:xxxx::xxxx/P).
+    *   Single Host Networks (for `discovered_unassigned_networks[].network_prefix`): Use /32 for IPv4, /128 for IPv6.
+
+V. TARGET DATA FIELDS & DESCRIPTIONS FOR STAGE 1B:
+
+Provide content for the following conceptual fields, using Stage 1A output and the full device data package:
+
+**`moonid_associations` (Array of Objects):** /* Based STRICTLY on Rules A/B (Section VI) using extracted site MOONID list and Stage 1A data (SVIs, ARPs, Routes, VLANs). */
+    *   `moonid`: string (The MOONID from site list)
+    *   `resolution_method`: string ('SVI_IP_Match', 'ARP_IP_Match', 'Route_Destination_IP_Match', 'VLAN_ID_Match')
+    *   `confidence_score`: real (1.0 for IP-based, 0.7 for VLAN ID-based)
+
+**`discovered_unassigned_networks` (Array of Objects):** /* IPs/Prefixes from Stage 1A data (SVIs, ARP IPs, route destinations) NOT in site MOONID list. Exclude neighbor-only IPs & common/vendor defaults per Section VI. */
+    *   `network_prefix`: string (CIDR. Single IPs: /32 or /128. Standardize.)
+    *   `discovery_source_type`: string ('SVI_Unmatched', 'ARP_Unmatched_IP', 'Route_Unmatched_Destination')
+    *   `discovery_context`: string | null (Specific context from log/Stage 1A data, e.g., SVI Name, ARP source IP)
+
+**`items_for_review` (Array of Objects):** /* Items needing attention for THIS STAGE or due to Stage1A/1B inconsistencies. */
+    *   `severity`: string ('High', 'Medium', 'Low')
+    *   `item_path`: string (Conceptual path, e.g., 'moonid_associations[0].confidence_score', 'discovered_unassigned_networks')
+    *   `reason`: string (Concise, LLM-generated, e.g., 'MOONID_Associated_To_NonOperational_Status', 'Route_Based_MOONID_Association_Low_Specificity')
+    *   `details`: string (Specific context, e.g., 'MOONID XYZ has status Retired', 'Associated to MOONID ABC via route RFC 1918 supernets which is very broad')
+
+VI. SPECIFIC PROCESSING RULES & LOGIC (Apply to Stage 1B Data, using Stage 1A context):
+
+*   **`moonid_associations` Logic (Strictly apply using ONLY extracted SITE_SPECIFIC_MOONID_DATA and Stage 1A data):**
+    *   Reference SVIs, ARPs, Routes, and VLANs from the provided Stage 1A JSON output.
+    *   **Rule A (IP-Based - Confidence 1.0):**
+        *   SVI IP Match: SVI IP (from Stage 1A `ip_interfaces`) falls within MOONID's `ip_range_definition`. `resolution_method: 'SVI_IP_Match'`.
+        *   ARP IP Match: ARP IP (from Stage 1A `arp_entries`) falls within MOONID's `ip_range_definition`. `resolution_method: 'ARP_IP_Match'`.
+        *   Route Destination IP Match (Apply Route Specificity Filter from Stage 1A `routes`): `destination_prefix` matches MOONID's `ip_range_definition`. **CRITICAL FILTER:** Only if route's prefix is >= /20 (IPv4) or >= /48 (IPv6). Avoid if more direct SVI/ARP association exists for related MOONID. `resolution_method: 'Route_Destination_IP_Match'`.
+    *   **Rule B (VLAN ID Match - Confidence 0.7 - ONLY if NO Rule A match for a MOONID):**
+        *   Switch VLAN ID (from Stage 1A `vlans` list) matches MOONID's `vlan_id`. `resolution_method: 'VLAN_ID_Match'`.
+        *   Qualify: Only if switch has active interfaces for this VLAN (check Stage 1A `interfaces` and `vlans[].ports_associated_text`).
+        *   **Specific Handling for VLAN 1 (if `vlan_id` is 1):**
+            *   If MOONID has `vlan_id: 1` AND `ip_range_definition` (L3 MOONID): Rule B association ONLY if L3 evidence of MOONID's `ip_range_definition` exists in Stage 1A ARP table or specific routes.
+            *   If MOONID has `vlan_id: 1` but NO `ip_range_definition` (L2 MOONID): NO Rule B association.
+            *   General VLAN 1 Caution: Exercise extreme caution.
+    *   Exclusions: NO association by site match alone.
+    *   MOONID Status Review: If association to non-'Operational'/'Being built' MOONID, add to `items_for_review`.
+    *   General Principle: Prioritize strong, direct IP-based matches. Flag if MOONID associated is for a different site/building than the switch's metadata location (from Stage 1A `switch_details`).
+
+*   **`discovered_unassigned_networks` Logic (MODIFIED: Use Stage 1A data; Stricter Exclusions):**
+    *   List any IP network from Stage 1A (`ip_interfaces[].ip_address_with_prefix`, `arp_entries[].ip_address`, `routes[].destination_prefix`) that is NOT found within any `ip_range_definition` in the `SITE_SPECIFIC_MOONID_DATA`.
+    *   **Primary Goal for this Field:** Identify potentially undocumented **site-specific operational networks** being actively used or routed on this device, beyond its basic default management or infrastructure IPs.
+    *   **CRITICAL EXCLUSIONS (DO NOT ADD networks to this list if they fall under these categories, EVEN IF THEY ARE "USED" by the switch for its own operation unless that use is for site-specific user/application traffic not covered by MOONID data):**
+        1.  IPs *solely* derived from LLDP/CDP neighbor management advertisements (i.e., from `neighbors[].remote_mgmt_address` in Stage 1A output).
+        2.  Standard Infrastructure Networks: This includes default routes (`0.0.0.0/0`, `::/0`), loopback addresses (e.g., `127.0.0.0/8`), link-local addresses (e.g., `169.254.0.0/16`, `fe80::/10`), and broad standard multicast ranges unless they are verifiably used for site-specific multicast applications not defined in MOONID data.
+        3.  **Common Vendor-Specific Default/Internal Networks:**
+            *   These are networks known to be used by vendors for default management, internal operations, or initial setup.
+            *   **Example:** D-Link's default management IP `factory-default-address` (often part of the `RFC 1918 supernets` or `vendor-default-range` range). If this switch is using `factory-default-address` (or a similar known default for its make) as its *own management IP* (e.g., on SVI Vlan1) and this IP is not part of any defined MOONID, **IT SHOULD BE EXCLUDED** from `discovered_unassigned_networks`. The purpose is not to rediscover the switch's own default management IP if it's not documented in a MOONID.
+            *   Other examples might include unused Cisco default VLAN SVIs (e.g., VLANs 1002-1005) if they happen to get an IP but aren't used for actual site traffic.
+        4.  Extremely Broad Private IP Ranges: Do not list entire broad private ranges like an RFC 1918 private supernet itself *unless* specific, narrower subnets *within* them (that are more specific than, say, a /20 for IPv4) are actively configured on the switch's interfaces for clear site-specific operational traffic AND these narrower subnets are NOT covered by any `ip_range_definition` in the `SITE_SPECIFIC_MOONID_DATA`. The focus is on operational networks, not just any potential address space the switch might be aware of via a broad route.
+    *   `discovery_source_type`: 'SVI_Unmatched', 'ARP_Unmatched_IP', 'Route_Unmatched_Destination'.
+    *   `discovery_context`: Specific IP/interface/route from Stage 1A data that led to this (e.g., "SVI Vlan1 IP: 192.0.2.23/24").
+
+
+*   **Guidance on Flagging for `items_for_review` (General for Stage 1B):**
+    *   Flag issues with MOONID associations (e.g., low confidence, non-operational MOONID, cross-site association).
+    *   Flag significant discovered unassigned networks.
+    *   Flag inconsistencies identified when comparing Stage 1B findings against the provided Stage 1A context.
+    *   `reason` should be concise, LLM-derived.

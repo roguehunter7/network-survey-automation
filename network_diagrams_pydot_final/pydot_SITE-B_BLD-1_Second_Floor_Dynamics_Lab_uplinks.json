@@ -1,0 +1,47 @@
+[
+  {
+    "local_switch_serial_number": "SYNB0000023",
+    "local_switch_hostname": "sw-b1-023",
+    "uplink_to_serial_number": "SYNB0000026",
+    "uplink_to_hostname": "sw-b1-026",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNB0000024",
+    "local_switch_hostname": "sw-b1-024",
+    "uplink_to_serial_number": "SYNB0000023",
+    "uplink_to_hostname": "sw-b1-023",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNB0000026",
+    "local_switch_hostname": "sw-b1-026",
+    "uplink_to_serial_number": "SYNB0000023",
+    "uplink_to_hostname": "sw-b1-023",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNA0000012",
+    "local_switch_hostname": "sw-a1-012",
+    "uplink_to_serial_number": "SYNB0000023",
+    "uplink_to_hostname": "sw-b1-023",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  },
+  {
+    "local_switch_serial_number": "SYNB0000017",
+    "local_switch_hostname": "sw-b1-017",
+    "uplink_to_serial_number": "SYNB0000024",
+    "uplink_to_hostname": "sw-b1-024",
+    "uplink_role": "Access",
+    "connection_type": "lldp_cdp",
+    "is_isolated_from_fas": true
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "User",
+  "device_type": "Switch",
+  "final_hostname": "sw-a1-012",
+  "final_serial_number": "SYNA0000012",
+  "final_make": "Huawei",
+  "final_model": "HW-5700-28X",
+  "is_poe_capable": 1,
+  "final_rack_type_detail": "N/A",
+  "final_site": "SITE-A",
+  "final_building": "BLD-1",
+  "final_floor": "Third Floor",
+  "final_wing": "South Wing",
+  "final_area_name": "Optics Lab",
+  "final_location_notes": "Top of rack"
+}

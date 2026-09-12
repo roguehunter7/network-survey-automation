@@ -1,0 +1,24 @@
+[
+  {
+    "Timestamp": "2025-06-03 14:47:00",
+    "StatusReason": "Unmanaged (No CLI)",
+    "Site": "SITE-D",
+    "Building": "BLD-1",
+    "Floor": "First Floor",
+    "Wing": "Nil",
+    "AreaName": "Validation Lab",
+    "SpecificLocationNotes": "Rack",
+    "RackTypeDetail": "Wall",
+    "ReportedMake": "Aruba",
+    "ReportedModel": "AR-1810",
+    "ReportedSerialNumber": "SYNOD008843",
+    "ReportedAssetTag": "Unknown",
+    "ReportedMOONID": "MOON100052",
+    "ObservedLaptopIP": "198.18.3.52",
+    "FailureReason": "N/A",
+    "ObservedSSID": "",
+    "MACAddress": "",
+    "ReportedTotalPorts": "5",
+    "ReportedUsedPorts": "1"
+  }
+]

@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "network-survey-automation"
+version = "3.0.1"
+description = "Capture, parse, store and visualise physical network surveys."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Sreeram K R" }]
+dependencies = [
+    "pydantic>=2.6",
+    "google-genai>=1.0",
+    "networkx>=3.2",
+    "pydot>=2.0",
+    "pandas>=2.1",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+vendor = ["mac-vendor-lookup>=0.1.12"]
+
+[tool.setuptools]
+packages = [
+    "netsurvey",
+    "netsurvey.gui",
+    "netsurvey.db",
+    "netsurvey.llm",
+    "netsurvey.topology",
+    "netsurvey.reporting",
+]
+
+[tool.setuptools.package-data]
+"netsurvey.llm" = ["prompts/*.txt"]

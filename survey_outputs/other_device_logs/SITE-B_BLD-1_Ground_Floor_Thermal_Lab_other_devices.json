@@ -1,0 +1,24 @@
+[
+  {
+    "Timestamp": "2025-06-20 14:05:00",
+    "StatusReason": "Failed Access (Creds Unknown)",
+    "Site": "SITE-B",
+    "Building": "BLD-1",
+    "Floor": "Ground Floor",
+    "Wing": "Nil",
+    "AreaName": "Thermal Lab",
+    "SpecificLocationNotes": "Under desk",
+    "RackTypeDetail": "N/A",
+    "ReportedMake": "HP",
+    "ReportedModel": "HP-1800-24",
+    "ReportedSerialNumber": "SYNOD339010",
+    "ReportedAssetTag": "Unknown",
+    "ReportedMOONID": "MOON100021",
+    "ObservedLaptopIP": "198.18.67.14",
+    "FailureReason": "N/A",
+    "ObservedSSID": "",
+    "MACAddress": "",
+    "ReportedTotalPorts": "48",
+    "ReportedUsedPorts": "24"
+  }
+]

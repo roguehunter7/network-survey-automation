@@ -1,0 +1,18 @@
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "Privileged",
+  "device_type": "Switch",
+  "final_hostname": "sw-b1-024",
+  "final_serial_number": "SYNB0000024",
+  "final_make": "Huawei",
+  "final_model": "HW-6700-24T",
+  "is_poe_capable": 0,
+  "final_rack_type_detail": "Floor",
+  "final_site": "SITE-B",
+  "final_building": "BLD-1",
+  "final_floor": "Second Floor",
+  "final_wing": "North Wing",
+  "final_area_name": "Dynamics Lab",
+  "final_location_notes": "Cabinet 9"
+}

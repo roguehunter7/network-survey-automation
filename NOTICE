@@ -1,0 +1,9 @@
+Network Survey Automation
+Copyright (c) 2025 Sreeram K R. All rights reserved.
+
+Distributed under the PolyForm Noncommercial License 1.0.0 (see LICENSE).
+Commercial use is expressly prohibited.
+
+This repository is a heavily sanitised, synthetic demonstration build. It contains no
+employer, customer, device or personal data. See docs/SANITIZATION.md for exactly what
+was removed and how the data was fabricated.

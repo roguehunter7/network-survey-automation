@@ -1,0 +1,257 @@
+RESPONSE DIRECTIVE: FRESH INSTANCE - ADHERE STRICTLY TO THIS PROMPT ONLY.
+
+TASK: Network Device Data Extraction for Structured JSON Output
+
+VERSION: STRUCTURED_OUTPUT_V1 (Based on REWORKED_V1, adapted for API-driven JSON schema)
+
+I. OVERALL OBJECTIVES & CRITICAL REQUIREMENTS:
+
+1.  **Primary Goal: EXTREME ACCURACY OF CONTENT.**
+    *   The data you provide for each field MUST be free of broken, incomplete, or inaccurate information.
+    *   If any data point is genuinely uncertain after applying all rules, use `null` for that field's value and flag it for review as specified in Section VI (items_for_review).
+    *   The Gemini API will handle the final JSON formatting based on a provided schema. Your role is to generate the *correct and complete content* for that schema.
+
+1.A. **LLM Autonomy and Unbiased Reasoning (for descriptive fields):** While this prompt provides detailed rules, for fields requiring descriptive text generation (e.g., `items_for_review[].reason`, `items_for_review[].details`), use your analytical capabilities to generate the most accurate and fitting descriptions based on the data and rules. Examples of *categories* for `reason` codes may be given, but these are not exhaustive. Generate a specific, concise reason based on your findings.
+
+1.B. **Comprehensive Data Consideration:** All provided input sections (Metadata, Console Log(s), MOONID data) MUST be processed. If multiple console logs (e.g., Wave 1, Wave 2) are provided, information from all logs should be synthesized to form the most complete and accurate picture, respecting prioritization rules.
+
+2.  **Input Scope:**
+    *   Process ONLY the single, delimited input package provided in this turn.
+    *   You have NO prior context from other devices.
+    *   All references to "metadata," "log(s)," or "site-specific MOONID data" refer exclusively to content extracted from the delimited sections of the CURRENT input package.
+
+
+II. INPUT PACKAGE STRUCTURE & INITIAL PARSING:
+
+You will receive a single text input structured with the following delimited sections. Parse and extract content from each section in this order:
+
+A.  **LLM Instructions (This Document):**
+    *   Starts with: `%%%START_LLM_PROMPT_STRUCTURED_OUTPUT_V1%%%`
+    *   Ends with: `%%%END_LLM_PROMPT_STRUCTURED_OUTPUT_V1%%%`
+    *   Action: Use these instructions to guide all subsequent processing.
+
+B.  **Switch Metadata JSON Content:**
+    *   Starts with: `%%%START_META_JSON_CONTENT%%%`
+    *   Ends with: `%%%END_META_JSON_CONTENT%%%`
+    *   Content: Raw text of the `<SN>-WAVE1.meta.json` file (or similar).
+
+C.  **Full Wave 1 Console Log Content (Primary Log):**
+    *   Starts with: `%%%START_FULL_WAVE1_LOG_CONTENT%%%`
+    *   Ends with: `%%%END_FULL_WAVE1_LOG_CONTENT%%%`
+    *   Content: Raw text of the `<SN>-WAVE1.txt` console log.
+
+D.  **Full Wave 2 Console Log Content (Supplementary Log - OPTIONAL SECTION):**
+    *   Starts with: `%%%START_FULL_WAVE2_LOG_CONTENT%%%`
+    *   Ends with: `%%%END_FULL_WAVE2_LOG_CONTENT%%%`
+    *   If Present: Raw text of `<SN>-WAVE2.txt`. Integrate with Primary Log data.
+    *   If Absent: Assume no Wave 2 log provided.
+
+E.  **Site-Specific MOONID List JSON Content:**
+    *   Starts with: `%%%START_SITE_SPECIFIC_MOONID_DATA%%%`
+    *   Ends with: `%%%END_SITE_SPECIFIC_MOONID_DATA%%%`
+    *   Content: Raw text of the site-specific MOONID data JSON file.
+
+FAILURE TO PARSE: If you cannot reliably parse these sections, state this failure clearly and DO NOT proceed.
+
+III. ANALYTICAL WORKFLOW & DATA PROCESSING:
+
+Execute the following steps sequentially and rigorously:
+
+1.  **Log Analysis - Semantic Understanding (Vendor-Agnostic):**
+    *   Focus: Identify and extract network data points by analyzing the entirety of the provided log(s).
+    *   Distinguish Site-Specific vs. Standard Defaults.
+    *   Method: Understand information revealed, irrespective of precise commands or vendor.
+    *   CLI Error Handling: Recognize command input errors. Extract valid data ONLY.
+
+2.  **Evidence-Based Extraction & Synthesis:**
+    *   For every data point, internally pinpoint clear log evidence.
+    *   Use entire log context for corroboration.
+    *   Verify consistency and select the most accurate/complete/current representation.
+
+3.  **Metadata Correlation & Verification:**
+    *   Correlate log findings with extracted metadata.
+    *   Prioritization:
+        *   Operational data (SN, hostname, model, make, IPs, MACs, statuses): Log evidence takes PRIORITY over metadata. Flag discrepancies for review.
+        *   Location fields, device_type, access_level: Source ONLY from metadata. Note strong contradictions for review.
+
+4.  **Data Standardization (MANDATORY FOR VALUES):**
+    *   After identifying any data point, you MUST standardize its *value* according to **SECTION V: MANDATORY DATA STANDARDIZATION RULES** before providing it for the JSON.
+
+5.  **Ambiguity & Corrupted Log Handling:**
+    *   If a data point is ambiguous or log parts are corrupted, use `null` for its value.
+    *   Flag critical unreadable/obscured information for review.
+
+6.  **Application of Specific Processing Logic (MANDATORY):**
+    *   Apply all rules detailed in **SECTION VII: SPECIFIC PROCESSING RULES & LOGIC**.
+
+7.  **Final Internal Verification Pass (CRITICAL PRE-OUTPUT GATE):**
+    *   Perform a comprehensive self-review of ALL data content you have assembled for the target fields.
+    *   Check for: Internal Consistency, Comprehensive Standardization of Values, `moonid_associations` Validation, `discovered_unassigned_networks` Validation, Adherence to Field Descriptions, Sanity Checks, CLI Error Resilience.
+    *   `items_for_review` Accuracy: Items correctly flagged? Generated `reason` codes descriptive and accurate?
+    *   Proceed ONLY IF 100% confident in the *content* accuracy.
+
+IV. JSON CONTENT GENERATION GUIDANCE:
+
+Your sole task is to generate the *content* that will populate a JSON object. The Gemini API, guided by an external schema, will handle the final JSON structure and formatting.
+
+1.  **FOCUS ON ACCURATE DATA VALUES:** For each field described in Section VI (TARGET DATA FIELDS & DESCRIPTIONS), provide the most accurate value derived from your analysis, or `null` if appropriate.
+2.  **NO JSON FORMATTING INSTRUCTIONS:** Do not attempt to format the output as a JSON string yourself. Do not include curly braces `{}`, square brackets `[]` (unless they are part of a legitimate string value for a field), commas between fields, or field names with quotes. The API handles this.
+3.  **NO EXTRANEOUS TEXT:** Your output to the API should only contain the data values that correspond to the fields defined by the external schema, based on your processing of the input. Do not include any explanations, comments, greetings, apologies, Markdown fences, or any "Recommended Output Filename" lines.
+
+V. MANDATORY DATA STANDARDIZATION RULES (For Values):
+* MAC Addresses: Uppercase hex, colon-separated (e.g., 02:00:00:00:00:01).
+* IP Addresses & Prefixes (CIDR Notation):
+* IPv4: A.B.C.D/P (e.g., 192.0.2.10/24).
+* IPv6: Standard compressed hex with prefix (e.g., xxxx:xxxx::xxxx/P).
+* Single Host Networks (for discovered_unassigned_networks[].network_prefix): Use /32 for IPv4, /128 for IPv6.
+* Subnet Masks: Convert to prefix length.
+* Operational Statuses: Normalize to common lowercase (e.g., up, down, admin_down, active, inactive, err-disabled). If unclear, use concise verbatim log text, consistently.
+* ARP Age: Convert to total SECONDS (integer). null if "-", "incomplete", unclear.
+* Route Protocol: Translate to full names (Static, Connected, OSPF, BGP, Local).
+* Interface Types: Standardize (GigabitEthernet, FastEthernet, TenGigabitEthernet, Port-channel, Vlan, Loopback, Tunnel, Serial).
+
+VI. TARGET DATA FIELDS & DESCRIPTIONS (Content to be provided for the API's JSON schema):
+
+Provide content for the following conceptual fields. The API will map this to a JSON structure.
+
+**`switch_details` (Object):**
+    *   `serial_number`: string (MANDATORY. From meta.json, VERIFIED in log. If discrepancy, use log value, flag for review.)
+    *   `hostname`: string (From meta.json, VERIFIED in log. If discrepancy, use log value, flag for review.)
+    *   `model`: string (MANDATORY. From meta.json, VERIFIED in log. If discrepancy, use log value, flag for review.)
+    *   `make`: string (MANDATORY. From meta.json, VERIFIED/inferred in log. Standardize. If discrepancy, use log/inference, flag for review.)
+    *   `device_type`: string (Source ONLY: meta.json['device_type']. Corroborate; if strong contradiction, flag for review.)
+    *   `base_mac_address`: string | null (Device's primary hardware MAC from log. Standardize. Null if not found.)
+    *   `lab_area_name`: string (MANDATORY, Source ONLY: meta.json['lab_area_name'])
+    *   `floor`: string (MANDATORY, Source ONLY: meta.json['floor'])
+    *   `site`: string (MANDATORY, Source ONLY: meta.json['site'])
+    *   `building`: string (MANDATORY, Source ONLY: meta.json['building'])
+    *   `location_notes`: string (Source ONLY: meta.json['final_location_notes'])
+    *   `rack_type_detail`: string (Source ONLY: meta.json['final_rack_type_detail'])
+    *   `access_level`: string (Source ONLY: meta.json['access_level'])
+    *   `survey_timestamp`: string (Source ONLY: meta.json['metadata_capture_timestamp'])
+    *   `log_filename_validated`: string (Construct as '<verified_serial_number>-WAVE1.txt' using the `serial_number` value you derived for this object.)
+    *   `ip_version_routing`: string ('ipv4', 'ipv6', 'both', 'none'. Inferred from log.)
+    *   `running_config_captured`: integer (1 if full config in log(s), else 0)
+    *   `is_poe_capable`: integer | null (**Prioritize explicit value from metadata if present.** If `is_poe_capable` is `1` (Yes) or `0` (No) in the `%%%START_META_JSON_CONTENT%%%`, use that value directly. If the `is_poe_capable` key is absent from metadata or its value is `null` (meaning the surveyor did not specify), then infer from log: `1` if PoE is clearly evident from logs (e.g., `show power inline`), `0` if logs explicitly state no PoE capability or it's clearly not a PoE model, `null` if uncertain from logs.)
+    *   `handles_internal_vlans`: integer (0 or 1. REVISED LOGIC: See Section VII.)
+    *   `user_verified_total_ports`: integer | null (From meta.json. If not, derive via Combo Port Rule, flag for review. Null if unavil/cannot derive.)
+    *   `user_verified_used_ports`: integer | null (From meta.json. If not, derive from 'up'/'connected' interfaces via Combo Port Rule, flag for review. Null if unavil/cannot derive or total_ports is null.)
+
+**`interfaces` (Array of Objects):** /* Physical/logical data ports. Exclude pure mgmt-only unless they carry production VLANs. */
+    *   `interface_name`: string (Full name, e.g., 'GigabitEthernet0/1')
+    *   `status`: string | null (Standardized: 'up', 'down', etc.)
+    *   `vlan`: string | null (Access: '[VLAN_ID]'. Trunk: 'trunk' or 'trunk (native [NATIVE_VLAN_ID])'. Null if N/A.)
+    *   `duplex`: string | null ('full', 'half', 'auto')
+    *   `speed`: string | null ('100', '1000', '10G', 'auto'. Include G/M if specified.)
+    *   `type`: string | null (Inferred: 'GigabitEthernet', 'Port-channel', etc. Null if unidentifiable.)
+    *   `description`: string | null (Interface description/alias. Null if none.)
+
+**`vlans` (Array of Objects):** /* Distinct VLANs from log. **Exclude** common vendor-specific default/internal VLANs (e.g., Cisco VLANs 1002-1005, FDDITalk, TRCRF, etc.) **UNLESS** they are explicitly configured with a site-specific name AND/OR have active, site-data-carrying user ports assigned to them (mere default existence in 'show vlan' is not sufficient). If a default VLAN ID (like 1002-1005) appears in 'show vlan' but seems unused for site-specific purposes or is only populated with system/internal ports, do not list it here. */
+    *   `vlan_id`: integer (1-4094)
+    *   `vlan_name`: string | null (Name. Null if none.)
+    *   `status`: string | null (Standardized: 'active', 'inactive'. Null if N/A.)
+    *   `ports_associated_text`: string | null (Verbatim port list from log. Null if not found.)
+
+**`ip_interfaces` (Array of Objects):** /* L3 interfaces (SVIs, routed ports). If an interface has multiple IP addresses (primary/secondary), create only ONE entry for that interface name, and for `ip_address_with_prefix`, list the PRIMARY IP. If distinguishing primary is difficult, list the first one encountered. Flag for review if multiple IPs are found for a single named interface, noting the additional IPs in the review details. */
+    *   `interface_name`: string (e.g., 'Vlan[VLAN_ID]', or routed physical port name)
+    *   `mac_address`: string | null (SVI MAC. Standardize. Null if not found.)
+    *   `ip_address_with_prefix`: string | null (PRIMARY IP with CIDR. Null if none.)
+    *   `status`: string | null (Standardized operational status)
+    *   `protocol_status`: string | null (Standardized protocol status)
+    *   `is_management`: integer | null (1 if primary mgmt interface, 0 otherwise, null if uncertain.)
+
+**`mac_entries` (Array of Objects):** /* MAC table entries. */
+    *   `mac_address`: string (Standardized)
+    *   `interface_name`: string (Port or Port-channel)
+    *   `vlan_id`: integer
+    *   `type`: string | null ('DYNAMIC', 'STATIC', etc. Null if N/A.)
+
+**`arp_entries` (Array of Objects):** /* ARP (IPv4) or ND (IPv6 neighbor) entries. */
+    *   `ip_address`: string (IPv4 or IPv6. Standardize IPv6.)
+    *   `mac_address`: string | null (Standardized. Null if incomplete.)
+    *   `interface_name`: string | null (Often SVI. Null if N/A.)
+    *   `vlan_id`: integer | null (VLAN ID. Null if N/A.)
+    *   `type`: string | null ('ARPA', 'SNAP'; ND: 'STALE', etc. Null if N/A.)
+    *   `age_in_seconds`: integer | null (Age in seconds. Null if '-', 'incomplete', N/A.)
+
+**`routes` (Array of Objects):** /* Routing table entries (IPv4 & IPv6). */
+    *   `ip_version`: integer (4 or 6)
+    *   `destination_prefix`: string (CIDR notation. Standardize.)
+    *   `next_hop_ip`: string | null (Null if directly connected/N/A.)
+    *   `outgoing_interface`: string | null (Null if N/A.)
+    *   `metric`: integer | null (Null if N/A.)
+    *   `protocol`: string | null (Standardized: 'Static', 'Connected', etc. Null if N/A.)
+    *   `is_default_route`: integer (1 if default (0.0.0.0/0 or ::/0), else 0)
+
+**`moonid_associations` (Array of Objects):** /* Based STRICTLY on Rules A/B (Section VII) using extracted site MOONID list. */
+    *   `moonid`: string (The MOONID from site list)
+    *   `resolution_method`: string ('SVI_IP_Match', 'ARP_IP_Match', 'Route_Destination_IP_Match', 'VLAN_ID_Match')
+    *   `confidence_score`: real (1.0 for IP-based, 0.7 for VLAN ID-based)
+
+**`discovered_unassigned_networks` (Array of Objects):** /* IPs/Prefixes from log (excluding neighbor-only IPs & common/vendor defaults per Section VII) NOT in site MOONID list. */
+    *   `network_prefix`: string (CIDR. Single IPs: /32 or /128. Standardize.)
+    *   `discovery_source_type`: string ('SVI_Unmatched', 'ARP_Unmatched_IP', 'Route_Unmatched_Destination')
+    *   `discovery_context`: string | null (Specific context from log)
+
+**`neighbors` (Array of Objects):** /* LLDP/CDP neighbor entries from log. If a single local interface reports multiple distinct neighbors (e.g., via an intermediate transparent switch), create a separate neighbor object for each distinct remote device reported on that local interface. */
+    *   `local_interface_name`: string
+    *   `protocol_used`: string ('LLDP' or 'CDP')
+    *   `remote_device_id`: string (Chassis ID/Device ID. Standardize MACs.)
+    *   `remote_interface_name`: string (Port ID/Interface Name)
+    *   `remote_system_name`: string | null (Hostname. Null if N/A.)
+    *   `remote_mgmt_address`: string | null (IP. Standardize. Null if N/A.)
+    *   `remote_model`: string | null (Platform/model. Null if N/A.)
+
+**`items_for_review` (Array of Objects):** /* Items needing human attention. */
+    *   `severity`: string ('High', 'Medium', 'Low')
+    *   `item_path`: string (Conceptual path to affected item, e.g., 'switch_details.hostname', 'vlans[1].vlan_name', 'ip_interfaces[0].secondary_ips_found')
+    *   `reason`: string (Concise, LLM-generated descriptive reason, e.g., 'Log_Model_Differs_From_Metadata', 'Secondary_IPs_Detected_On_SVI')
+    *   `details`: string (Specific context, e.g., 'Metadata SN: [SN_Meta], Log SN: [SN_Log]', 'SVI Vlan10 has primary 192.0.2.10/24, also found 192.0.2.12/24, 192.0.2.13/24')
+
+
+VII. SPECIFIC PROCESSING RULES & LOGIC (Apply to data extracted from input package):
+* Combo Port Rule (for user_verified_total_ports, user_verified_used_ports if deriving from log):
+* Count physical interfaces (Ethernet, etc.) NOT part of port-channel, NOT virtual.
+* "Combo" ports (RJ45/SFP) count as ONE.
+* If metadata user_verified_total_ports wildly differs from log-derived, flag for review.
+* handles_internal_vlans (Revised Logic with specific VLAN 1 handling):
+* Set to 1 (True) if EITHER:
+1. An IP interface (SVI/routed port, incl. SVI for VLAN 1 if it has an IP) has an IP whose network is NOT in any ip_range_definition in extracted SITE_SPECIFIC_MOONID_DATA. (Excluding standard infra/unused vendor defaults per discovered_unassigned_networks exclusions).
+2. A VLAN ID (from vlans list, which excludes unused vendor defaults, incl. VLAN 1 if actively used for site data) exists AND that VLAN ID is NOT present as vlan_id in extracted SITE_SPECIFIC_MOONID_DATA.
+* Else, set to 0 (False).
+* Clarification for VLAN 1: Flag for review if handles_internal_vlans is true due to VLAN 1 usage not documented in MOONID.
+
+*   **`moonid_associations` Logic (Strictly apply using ONLY extracted SITE_SPECIFIC_MOONID_DATA):**
+    *   **Rule A (IP-Based - Confidence 1.0):**
+        *   SVI IP Match: SVI IP (primary IP if multiple are configured on the SVI) falls within MOONID's `ip_range_definition`. Prioritize most specific. `resolution_method: 'SVI_IP_Match'`.
+        *   ARP IP Match: ARP IP falls within MOONID's `ip_range_definition`. Same specificity. `resolution_method: 'ARP_IP_Match'`.
+        *   Route Destination IP Match (Apply Route Specificity and Prefix Length Filter): `destination_prefix` matches MOONID's `ip_range_definition`. **CRITICAL FILTER:** An association via this method should ONLY be made if the route's `destination_prefix` on the switch is **more specific than or equal to a /20 prefix length for IPv4 (e.g., /20, /21, ..., /32) or more specific than or equal to a /48 prefix length for IPv6 (e.g., /48, /56, ..., /128).** Do NOT associate based on routes with prefixes broader than these thresholds (e.g., IPv4 /19, /16, /8, /0 or IPv6 /47, /32). Furthermore, even if the prefix length condition is met, an association via a route should generally be avoided if there is a more direct SVI or ARP-based association for the switch to *any* MOONID that is encompassed by or related to the route's destination. If a switch has a specific SVI in MOONID 'X', do not also associate it with MOONID 'Y' just because MOONID 'Y' has an IP range that is reachable via an allowed-prefix-length route on the switch. Flag route-based associations, especially if they are the sole basis for linking to a MOONID or if the MOONID itself defines a very large range. `resolution_method: 'Route_Destination_IP_Match'`.
+    *   **Rule B (VLAN ID Match - Confidence 0.7 - ONLY if NO Rule A match for a MOONID):**
+        *   Switch VLAN ID (from the filtered `vlans` list) matches MOONID's `vlan_id`. `resolution_method: 'VLAN_ID_Match'`.
+        *   Further qualify: Only associate via VLAN ID if the switch has active, operational interfaces assigned to this VLAN (beyond just default port membership for an unused VLAN). Do not associate based on a VLAN ID that is defined in the MOONID data but appears unused or merely 'defined' on the switch without active participation in site traffic.
+        *   **Specific Handling for VLAN 1 (applies IF the `vlan_id` for potential Rule B match IS 1):**
+            *   If the MOONID being considered has `vlan_id: 1` AND an `ip_range_definition` (i.e., it's an L3 MOONID also mapped to VLAN 1):
+                *   A Rule B association for this MOONID (via VLAN 1) should ONLY be made if there is Layer 3 evidence of this MOONID's `ip_range_definition` on the switch. This evidence includes:
+                    *   IP addresses from the MOONID's `ip_range_definition` appearing in the switch's ARP table (`arp_entries`).
+                    *   OR, a specific IP route (`routes`) on the switch whose `destination_prefix` matches or is part of the MOONID's `ip_range_definition` (this route must also satisfy the general route specificity filters, e.g., more specific than /20 for IPv4 or /48 for IPv6).
+                *   If such L3 evidence is ABSENT, do NOT make this Rule B association for VLAN 1 to this L3 MOONID, even if the switch has VLAN 1 configured (and in the `vlans` list) and the MOONID data lists `vlan_id: 1`.
+            *   If the MOONID being considered has `vlan_id: 1` but NO `ip_range_definition` (i.e., it's an L2-only MOONID defined for VLAN 1), then a Rule B association based on VLAN 1 matching should NOT be made.
+            *   **General VLAN 1 Caution:** For any Rule B association, if the `vlan_id` involved is 1, exercise extreme caution. Only proceed with an association if the conditions for an L3 MOONID on VLAN 1 (as described above, requiring L3 evidence) are met. Avoid associating based on VLAN 1 for purely L2 MOONIDs or if L3 evidence is missing for L3 MOONIDs on VLAN 1.
+    *   Exclusions: NO association by site match alone.
+    *   MOONID Status Review: If association to a non-'Operational'/'Being built' MOONID, add to `items_for_review`.
+    *   **General Principle for MOONID Association:** Prioritize strong, direct evidence. A single, clear IP-based match (SVI, specific ARP) to a specific MOONID is preferred over multiple weaker or broader associations. If a switch's VLAN is associated with a MOONID primarily defined for a different site/building (as per MOONID data's own location fields, if available), this should be flagged for review even if a VLAN ID matches.
+
+*   **`discovered_unassigned_networks` Logic (MODIFIED: Exclude neighbor mgmt IPs & common/default nets):**
+    *   List any IP network (SVIs, ARP IPs, route destinations) NOT in `SITE_SPECIFIC_MOONID_DATA` `ip_range_definition`.
+    *   Goal: Identify potentially undocumented *site-specific* operational networks.
+    *   Exclusions (DO NOT ADD to this list): IPs *solely* from LLDP/CDP neighbor mgmt ads; Standard Infrastructure Networks (default routes, loopbacks, link-local, broad multicast unless site-specific); Common Vendor-Specific Default/Internal Networks (e.g., unused Cisco 1002-1005 if not actively used for site data, a vendor's factory-default management address if standard default & not site-used); Extremely broad private IP ranges (e.g., an RFC 1918 private supernet itself) *unless* specific, narrower subnets within them are actively configured on the switch's interfaces (SVIs, routed ports) for site-specific operational traffic and are NOT covered by any `ip_range_definition` in the `SITE_SPECIFIC_MOONID_DATA`. The goal is to identify operational networks, not just potential address space.
+    *   `discovery_source_type`: 'SVI_Unmatched', 'ARP_Unmatched_IP', 'Route_Unmatched_Destination'.
+    *   `discovery_context`: Specific IP/interface/route from log.
+
+*   **Guidance on Flagging for `items_for_review` (General Principles):**
+    *   Metadata/Log Conflicts: Always flag.
+    *   Ambiguity/Incompleteness: If log unclear or vital info missing.
+    *   Defaults: Do NOT flag standard infra/vendor defaults *solely for existing*. ONLY flag if they conflict with MOONID/metadata, cause ambiguity, or are unexpectedly used for site traffic.
+    *   VLAN 1 Specific Issues to Flag: If `handles_internal_vlans` true due to VLAN 1 usage; SVI Vlan1 IP in MOONID range but MOONID has different VLAN ID.
+    *   Multiple IPs on one SVI: If an SVI has multiple IPs (primary/secondary), list primary in `ip_interfaces[].ip_address_with_prefix` and flag for review, noting other IPs in `items_for_review[].details`.
+    *   `reason` in `items_for_review` should be concise, LLM-derived description.

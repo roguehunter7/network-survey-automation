@@ -1,0 +1,329 @@
+%%%START_LLM_PROMPT_STRUCTURED_OUTPUT_V1%%%
+SYNTHETIC DEMO PACKAGE - fabricated data for the public showcase build.
+%%%END_LLM_PROMPT_STRUCTURED_OUTPUT_V1%%%
+%%%START_META_JSON_CONTENT%%%
+{
+  "helper_script_version": "3.0.1",
+  "metadata_capture_timestamp": "2025-06-01T09:11:00",
+  "access_level": "User",
+  "device_type": "Switch",
+  "final_hostname": "sw-a1-008",
+  "final_serial_number": "SYNA0000008",
+  "final_make": "Cisco",
+  "final_model": "CS-2200-24T",
+  "is_poe_capable": 0,
+  "final_rack_type_detail": "Mini",
+  "final_site": "SITE-A",
+  "final_building": "BLD-1",
+  "final_floor": "Second Floor",
+  "final_wing": "South Wing",
+  "final_area_name": "Telemetry Lab",
+  "final_location_notes": "Top of rack"
+}
+%%%END_META_JSON_CONTENT%%%
+%%%START_FULL_WAVE1_LOG_CONTENT%%%
+
+sw-a1-008#terminal length 0
+sw-a1-008#show version
+CS-2200-24T uptime is 12 weeks, 3 days
+System returned to ROM by reload
+System image file is "flash:/images/CS-2200-24T
+
+sw-a1-008#show interfaces status
+Port      Name      Status       Vlan       Duplex  Speed Type
+Gi1/0/1              connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/2              connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/3              connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/4              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/5              notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/6              connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/7              connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/8              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/9              connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/10             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/11             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/12             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/13             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/14             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/15             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/16             notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/17             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/18             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/19             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/20             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/21             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/22             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/23             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/24             connected    1          a-full  a-1000 10/100/1000BaseTX
+
+sw-a1-008#show vlan
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/1, Gi1/0/2
+10   DATA                             active    Gi1/0/7, Gi1/0/8
+20   VOICE                            active    Gi1/0/9
+
+sw-a1-008#show mac address-table count
+Dynamic Address Counts:
+  Total Mac Addresses for this criterion: 379
+
+sw-a1-008#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  203.0.113.3        YES NVRAM  up                    up
+Vlan10                 198.18.24.1      YES NVRAM  up                    up
+
+sw-a1-008#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  198.18.8.211      76     020000068bfe  ARPA   Vlan10
+Internet  198.18.17.85       59     020000068bff  ARPA   Vlan10
+
+sw-a1-008#show ip route
+Gateway of last resort is 203.0.113.3 to network 0.0.0.0
+S*    0.0.0.0/0 [1/0] via 203.0.113.3
+C     198.18.0.0/24 is directly connected, Vlan10
+
+sw-a1-008#show cdp neighbors detail
+Device ID: SW-NEIGHBOUR.example.lab
+  IP address: 203.0.113.3
+  Platform: CS-2200-24T, Capabilities: Switch
+  Interface: GigabitEthernet1/0/1, Port ID (outgoing port): GigabitEthernet1/0/24
+
+sw-a1-008#show lldp neighbors detail
+Chassis id: 0200.0000.00aa
+System Name: sw-peer.example.lab
+Management Addresses: 203.0.113.3
+
+sw-a1-008#
+%%%END_FULL_WAVE1_LOG_CONTENT%%%
+%%%START_SITE_SPECIFIC_MOONID_DATA%%%
+[
+  {
+    "moonid": "MOON100001",
+    "site": "SITE-A",
+    "ip_range_definition": "198.18.0.0/24",
+    "purpose": "SITE-A-CORP-QA-PowerLab",
+    "business_group": null,
+    "vlan_id": 364,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Retired",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100002",
+    "site": "SITE-A",
+    "ip_range_definition": "198.19.0.0/24",
+    "purpose": "SITE-A-CORP-LAB-RoboticsLab",
+    "business_group": null,
+    "vlan_id": 719,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Operational",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100003",
+    "site": "SITE-A",
+    "ip_range_definition": "198.18.1.0/24",
+    "purpose": "SITE-A-CORP-QA-RoboticsLab",
+    "business_group": null,
+    "vlan_id": 680,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Being retired",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100004",
+    "site": "SITE-A",
+    "ip_range_definition": "198.19.1.0/24",
+    "purpose": "SITE-A-CORP-QA-RoboticsLab",
+    "business_group": "GROUP-01",
+    "vlan_id": 165,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Operational",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100005",
+    "site": "SITE-A",
+    "ip_range_definition": "198.18.2.0/24",
+    "purpose": "SITE-A-CORP-LAB-DataCentre",
+    "business_group": "GROUP-04",
+    "vlan_id": 967,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Being retired",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100006",
+    "site": "SITE-A",
+    "ip_range_definition": "198.19.2.0/24",
+    "purpose": "SITE-A-CORP-LAB-DataCentre",
+    "business_group": null,
+    "vlan_id": 164,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Being built",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100007",
+    "site": "SITE-A",
+    "ip_range_definition": "198.18.3.0/24",
+    "purpose": "SITE-A-CORP-QA-DataCentre",
+    "business_group": null,
+    "vlan_id": 851,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Operational",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100008",
+    "site": "SITE-A",
+    "ip_range_definition": "198.19.3.0/24",
+    "purpose": "SITE-A-CORP-LAB-TelemetryLab",
+    "business_group": null,
+    "vlan_id": 653,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Operational",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100009",
+    "site": "SITE-A",
+    "ip_range_definition": "198.18.4.0/24",
+    "purpose": "SITE-A-CORP-IT-TelemetryLab",
+    "business_group": null,
+    "vlan_id": 532,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Being built",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100010",
+    "site": "SITE-A",
+    "ip_range_definition": "198.19.4.0/24",
+    "purpose": "SITE-A-CORP-ENG-TelemetryLab",
+    "business_group": null,
+    "vlan_id": 393,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Being built",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100011",
+    "site": "SITE-A",
+    "ip_range_definition": "198.18.5.0/24",
+    "purpose": "SITE-A-CORP-OPS-ReliabilityLab",
+    "business_group": "GROUP-08",
+    "vlan_id": 373,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Operational",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100012",
+    "site": "SITE-A",
+    "ip_range_definition": "198.19.5.0/24",
+    "purpose": "SITE-A-CORP-ENG-ReliabilityLab",
+    "business_group": null,
+    "vlan_id": 960,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Being retired",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100013",
+    "site": "SITE-A",
+    "ip_range_definition": "198.18.6.0/24",
+    "purpose": "SITE-A-CORP-QA-ReliabilityLab",
+    "business_group": "GROUP-10",
+    "vlan_id": 479,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Being retired",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100014",
+    "site": "SITE-A",
+    "ip_range_definition": "198.19.6.0/24",
+    "purpose": "SITE-A-CORP-LAB-OpticsLab",
+    "business_group": "GROUP-08",
+    "vlan_id": 29,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Retired",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100015",
+    "site": "SITE-A",
+    "ip_range_definition": "198.18.7.0/24",
+    "purpose": "SITE-A-CORP-IT-OpticsLab",
+    "business_group": "GROUP-08",
+    "vlan_id": 799,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Operational",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100016",
+    "site": "SITE-A",
+    "ip_range_definition": "198.19.7.0/24",
+    "purpose": "SITE-A-CORP-LAB-DevelopmentLab",
+    "business_group": null,
+    "vlan_id": 538,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Being built",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100017",
+    "site": "SITE-A",
+    "ip_range_definition": "198.18.8.0/24",
+    "purpose": "SITE-A-CORP-ENG-DevelopmentLab",
+    "business_group": "GROUP-04",
+    "vlan_id": 66,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Retired",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100018",
+    "site": "SITE-A",
+    "ip_range_definition": "198.19.8.0/24",
+    "purpose": "SITE-A-CORP-QA-DisplayLab",
+    "business_group": "GROUP-11",
+    "vlan_id": 561,
+    "is_moonid_lab": 0,
+    "is_air_gap": 1,
+    "status": "Being built",
+    "date_retired": null
+  },
+  {
+    "moonid": "MOON100019",
+    "site": "SITE-A",
+    "ip_range_definition": "198.18.9.0/24",
+    "purpose": "SITE-A-CORP-IT-DisplayLab",
+    "business_group": null,
+    "vlan_id": 170,
+    "is_moonid_lab": 0,
+    "is_air_gap": 0,
+    "status": "Being retired",
+    "date_retired": null
+  }
+]
+%%%END_SITE_SPECIFIC_MOONID_DATA%%%

@@ -1,0 +1,96 @@
+
+sw-c1-032#terminal length 0
+sw-c1-032#show version
+HP-2600-48G uptime is 12 weeks, 3 days
+System returned to ROM by reload
+System image file is "flash:/images/HP-2600-48G
+
+sw-c1-032#show interfaces status
+Port      Name      Status       Vlan       Duplex  Speed Type
+Gi1/0/1              connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/2              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/3              notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/4              connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/5              connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/6              connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/7              connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/8              connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/9              connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/10             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/11             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/12             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/13             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/14             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/15             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/16             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/17             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/18             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/19             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/20             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/21             notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/22             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/23             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/24             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/25             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/26             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/27             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/28             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/29             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/30             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/31             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/32             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/33             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/34             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/35             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/36             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/37             notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/38             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/39             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/40             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/41             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/42             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/43             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/44             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/45             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/46             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/47             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/48             notconnect   10         a-full  a-1000 10/100/1000BaseTX
+
+sw-c1-032#show vlan
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/1, Gi1/0/2
+10   DATA                             active    Gi1/0/7, Gi1/0/8
+20   VOICE                            active    Gi1/0/9
+
+sw-c1-032#show mac address-table count
+Dynamic Address Counts:
+  Total Mac Addresses for this criterion: 18
+
+sw-c1-032#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  203.0.113.11        YES NVRAM  up                    up
+Vlan10                 198.18.34.1      YES NVRAM  up                    up
+
+sw-c1-032#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  198.18.34.237      23     0200000b2039  ARPA   Vlan10
+Internet  198.18.29.24       63     0200000b203a  ARPA   Vlan10
+
+sw-c1-032#show ip route
+Gateway of last resort is 203.0.113.11 to network 0.0.0.0
+S*    0.0.0.0/0 [1/0] via 203.0.113.11
+C     198.18.0.0/24 is directly connected, Vlan10
+
+sw-c1-032#show cdp neighbors detail
+Device ID: SW-NEIGHBOUR.example.lab
+  IP address: 203.0.113.11
+  Platform: HP-2600-48G, Capabilities: Switch
+  Interface: GigabitEthernet1/0/1, Port ID (outgoing port): GigabitEthernet1/0/24
+
+sw-c1-032#show lldp neighbors detail
+Chassis id: 0200.0000.00aa
+System Name: sw-peer.example.lab
+Management Addresses: 203.0.113.11
+
+sw-c1-032#

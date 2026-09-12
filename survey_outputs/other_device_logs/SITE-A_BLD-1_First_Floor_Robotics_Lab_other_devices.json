@@ -1,0 +1,24 @@
+[
+  {
+    "Timestamp": "2025-06-13 15:54:00",
+    "StatusReason": "Unmanaged (No CLI)",
+    "Site": "SITE-A",
+    "Building": "BLD-1",
+    "Floor": "First Floor",
+    "Wing": "Nil",
+    "AreaName": "Robotics Lab",
+    "SpecificLocationNotes": "Rack",
+    "RackTypeDetail": "Under Floor",
+    "ReportedMake": "HP",
+    "ReportedModel": "HP-1800-24",
+    "ReportedSerialNumber": "SYNOD533023",
+    "ReportedAssetTag": "Unknown",
+    "ReportedMOONID": "MOON100002",
+    "ObservedLaptopIP": "198.18.76.161",
+    "FailureReason": "N/A",
+    "ObservedSSID": "",
+    "MACAddress": "",
+    "ReportedTotalPorts": "5",
+    "ReportedUsedPorts": "5"
+  }
+]

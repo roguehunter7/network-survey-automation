@@ -1,0 +1,232 @@
+RESPONSE DIRECTIVE: STAGE 1A - BASIC DEVICE DATA EXTRACTION. ADHERE STRICTLY TO THIS PROMPT.
+
+TASK: Network Device Data Extraction - Stage 1A (Simpler Fields)
+
+VERSION: STRUCTURED_OUTPUT_V1_STAGE1A_REFINED_NEIGHBOR_CONSOLIDATION_V2
+
+I. STAGE 1A OBJECTIVES & CRITICAL REQUIREMENTS:
+
+1.  **Primary Goal: EXTREME ACCURACY OF CONTENT for Stage 1A fields.**
+    *   The data you provide for each field in THIS stage MUST be free of broken, incomplete, or inaccurate information. This includes strict adherence to all standardization rules.
+    *   If any data point for a Stage 1A field is genuinely uncertain after applying all rules, use `null` for that field's value and flag it for review as specified in Section V (items_for_review).
+    *   The Gemini API will handle the final JSON formatting based on a provided schema. Your role is to generate the *correct and complete content* for the Stage 1A schema.
+
+1.A. **LLM Autonomy and Unbiased Reasoning:** For descriptive fields (e.g., `items_for_review[].reason`), use your analytical capabilities to generate accurate descriptions based on the data and rules.
+
+1.B. **Comprehensive Data Consideration:** All provided input device data (Metadata, Console Log(s), MOONID data) MUST be processed to extract information relevant to Stage 1A fields. Synthesize information from all logs if multiple are provided.
+
+2.  **Input Scope:**
+    *   Process ONLY the device data package (metadata, logs, site MOONID list) provided in this turn.
+    *   You have NO prior context from other devices for this stage beyond the provided package.
+
+II. ANALYTICAL WORKFLOW & DATA PROCESSING (for Stage 1A Fields):
+
+Execute the following steps sequentially and rigorously for the fields in THIS stage:
+
+1.  **Log Analysis - Semantic Understanding (Vendor-Agnostic):**
+    *   Focus: Identify and extract data points for Stage 1A fields by analyzing the entirety of the provided log(s).
+    *   Distinguish Site-Specific vs. Standard Defaults.
+    *   Method: Understand information revealed, irrespective of precise commands or vendor.
+    *   CLI Error Handling: Recognize command input errors. Extract valid data ONLY.
+
+2.  **Evidence-Based Extraction & Synthesis:**
+    *   For every data point, internally pinpoint clear log evidence.
+    *   Use entire log context for corroboration.
+    *   Verify consistency and select the most accurate/complete/current representation.
+
+3.  **Metadata Correlation & Verification (for Stage 1A fields like switch_details):**
+    *   Correlate log findings with extracted metadata for fields like serial_number, hostname, model, make.
+    *   Prioritization: Log evidence takes PRIORITY over metadata for operational data. Flag discrepancies for review.
+    *   Location fields, device_type, access_level in `switch_details`: Source ONLY from metadata. Note strong contradictions for review.
+
+4.  **Data Standardization (MANDATORY FOR VALUES - see Section IV):**
+    *   After identifying any data point, standardize its *value* according to the CRITICAL rules in Section IV before providing it.
+
+5.  **Ambiguity & Corrupted Log Handling:**
+    *   If a data point is ambiguous or log parts are corrupted, use `null` for its value.
+    *   Flag critical unreadable/obscured information for review if it impacts Stage 1A fields.
+
+6.  **Application of Specific Processing Logic (MANDATORY - see Section VI and individual field descriptions in Section V):**
+    *   Apply all rules relevant to Stage 1A fields.
+
+7.  **Final Internal Verification Pass (CRITICAL PRE-OUTPUT GATE for Stage 1A):**
+    *   Perform a comprehensive self-review of ALL data content for Stage 1A fields.
+    *   Check for: Internal Consistency, **Strict Adherence to ALL Standardization Rules in Section IV**, Adherence to Field Descriptions, Sanity Checks.
+    *   `items_for_review` Accuracy: Items correctly flagged for THIS stage?
+    *   Proceed ONLY IF 100% confident in the *content* accuracy for Stage 1A.
+
+III. JSON CONTENT GENERATION GUIDANCE (for Stage 1A Output):
+
+Your sole task is to generate the *content* that will populate a JSON object for Stage 1A fields. The Gemini API, guided by an external schema, will handle the final JSON structure.
+
+1.  **FOCUS ON ACCURATE DATA VALUES:** For each field described in Section V, provide the most accurate value, or `null`. Adherence to standardization in Section IV is paramount.
+2.  **NO JSON FORMATTING INSTRUCTIONS:** Do not attempt to format the output as a JSON string.
+3.  **NO EXTRANEOUS TEXT:** Your output should only contain data values for Stage 1A fields. No comments, greetings, etc.
+
+IV. MANDATORY DATA STANDARDIZATION RULES (For Stage 1A Values - APPLY RIGOROUSLY):
+
+*   **MAC Addresses (CRITICAL FORMAT):**
+    *   MUST be uppercase hexadecimal characters.
+    *   MUST be colon-separated.
+    *   Example of CORRECT format: `02:00:00:00:11:22`
+    *   Example of INCORRECT format: `02-00-00-00-11-22` or `020000001122`
+    *   Applies to: `switch_details.base_mac_address`, `ip_interfaces[].mac_address`, and `remote_device_id` in `neighbors` if it's a MAC.
+
+*   **IP Addresses & Prefixes (CIDR Notation):**
+    *   IPv4: `A.B.C.D/P` (e.g., `192.0.2.10/24`).
+    *   IPv6: Standard compressed hexadecimal with prefix (e.g., `xxxx:xxxx::xxxx/P`).
+*   **Subnet Masks:** Convert to prefix length (e.g., `a dotted-quad mask` becomes `/24`).
+
+*   **Operational Statuses (CRITICAL STANDARDIZATION for `interfaces[].status`, `ip_interfaces[].status`, `ip_interfaces[].protocol_status`):**
+    *   Values for these fields MUST BE one of: `up`, `down`, `admin_down`.
+    *   DO NOT use verbatim log outputs like 'LinkUp', 'Link Down', 'Enabled', 'Disabled', ' Administratively Down', etc.
+    *   Infer the correct standardized value from the log context.
+    *   Examples:
+        *   Log shows `Link Status : LinkUp` or `Port Status: Link Up` -> `status: "up"`
+        *   Log shows `Link Status : LinkDown` or `Port Status: Link Down` -> `status: "down"`
+        *   Log shows `Administratively Down` or similar -> `status: "admin_down"`
+        *   Log shows `IPv4 State : Enabled` for an IP interface, and its link is up -> `protocol_status: "up"` (if link is down, protocol status might also be considered 'down' or follow operational status)
+        *   Log shows `IPv4 State : Disabled` for an IP interface -> `protocol_status: "down"`
+
+*   **VLAN Status (CRITICAL STANDARDIZATION for `vlans[].status`):**
+    *   Values for this field MUST BE one of: `active`, `inactive`.
+    *   DO NOT use the 'VLAN Type' from the log (e.g., 'Static', 'Dynamic') as the operational status.
+    *   If a VLAN is configured, present in 'show vlan brief' or equivalent, and has active member ports assigned to it (check `vlans[].ports_associated_text` or related interface configurations), it is generally considered `active`. An unused, default VLAN with no active user ports might be `inactive` or simply not listed if it meets exclusion criteria (see Section V `vlans` description). If operational status cannot be clearly determined, use `null`.
+
+*   **ARP Age:** Convert to total SECONDS (integer). `null` if "-", "incomplete", or unclear from log.
+*   **Route Protocol:** Translate to full names (e.g., Static, Connected, OSPF, BGP, Local).
+*   **Interface Names (Normalization for Matching):** When comparing interface names (e.g., for neighbor consolidation), normalize them. For example, "Gi1/0/1", "GigabitEthernet1/0/1", and "gigabitethernet1/0/1" should be treated as the same interface. Apply similar normalization to port-channel names, etc.
+*   **Interface Types (Standardization):** Standardize common names (e.g., `GigabitEthernet`, `FastEthernet`, `TenGigabitEthernet`, `Port-channel`, `Vlan`, `Loopback`, `Tunnel`, `Serial`).
+
+*   **Interface Speed (CRITICAL FORMAT for `interfaces[].speed`):**
+    *   Extract the numeric value and the unit (e.g., M for Megabits, G for Gigabits).
+    *   MUST include the unit (M or G) if specified in the log.
+    *   Examples from log: `100M/Full` -> speed should be `100M`. `1000M/Full` -> speed should be `1000M`. `10G/Full` -> speed should be `10G`.
+    *   If only numeric (e.g., "1000"), and context implies Mbps or Gbps, use your best judgment or standardize to a common representation (e.g., `1000M` if it's a Gigabit port displaying speed without explicit G). If "auto", use `auto`.
+    *   **CRITICAL for Down/Auto Interfaces:** If an interface's operational `status` is `down` (or `admin_down`), and its configured speed setting is 'Auto', the `speed` field MUST be `null`. DO NOT output 'Auto' for `speed` if the link is not operationally up.
+
+*   **Interface Duplex (CRITICAL FORMAT for `interfaces[].duplex`):**
+    *   Values MUST BE one of: `full`, `half`, `auto` (all lowercase).
+    *   DO NOT use 'Full', 'Half', or 'Auto' (capitalized).
+    *   **CRITICAL for Down/Auto Interfaces:** If an interface's operational `status` is `down` (or `admin_down`), and its configured duplex setting is 'Auto', the `duplex` field MUST be `null`. DO NOT output 'Auto' for `duplex` if the link is not operationally up.
+
+*   **Route Next Hop IP (CRITICAL for `routes[].next_hop_ip`):**
+    *   If the route is directly connected to an interface or is a 'Local' route (where the gateway might be shown as '0.0.0.0' in the log, or is the interface IP itself), this field MUST be `null`. Do not use "0.0.0.0" as the value.
+
+V. TARGET DATA FIELDS & DESCRIPTIONS FOR STAGE 1A:
+
+Provide content for the following conceptual fields, strictly adhering to standardization rules in Section IV:
+
+**`switch_details` (Object):**
+    *   `serial_number`: string (MANDATORY. From meta.json, VERIFIED in log. If discrepancy, use log value, flag for review.)
+    *   `hostname`: string (From meta.json, VERIFIED in log. If discrepancy, use log value, flag for review. Extract from command prompt if 'System Name' is blank.)
+    *   `model`: string (MANDATORY. From meta.json, VERIFIED in log. If discrepancy, use log value, flag for review.)
+    *   `make`: string (MANDATORY. From meta.json, VERIFIED/inferred in log. Standardize. Preferred: "D-Link" for Dlink/D-LINK Corporation. If discrepancy, use log/inference, flag for review.)
+    *   `device_type`: string (Source ONLY: meta.json['device_type']. Corroborate; if strong contradiction, flag for review.)
+    *   `base_mac_address`: string | null (Device's primary hardware MAC from log. **MUST be standardized to colon-separated format as per Section IV (e.g., C0:L0:N0:SE:PA:RA).** Null if not found.)
+    *   `lab_area_name`: string (MANDATORY, Source ONLY: meta.json['lab_area_name'])
+    *   `floor`: string (MANDATORY, Source ONLY: meta.json['floor'])
+    *   `site`: string (MANDATORY, Source ONLY: meta.json['site'])
+    *   `building`: string (MANDATORY, Source ONLY: meta.json['building'])
+    *   `location_notes`: string (Source ONLY: meta.json['final_location_notes'])
+    *   `rack_type_detail`: string (Source ONLY: meta.json['final_rack_type_detail'])
+    *   `access_level`: string (Source ONLY: meta.json['access_level'])
+    *   `survey_timestamp`: string (Source ONLY: meta.json['metadata_capture_timestamp'])
+    *   `log_filename_validated`: string (Construct as '<verified_serial_number>-WAVE1.txt' using the `serial_number` value you derived for this object.)
+    *   `ip_version_routing`: string ('ipv4', 'ipv6', 'both', 'none'. Inferred from log.)
+    *   `running_config_captured`: integer (1 if full config in log(s), else 0. If `sh run` results in "Ambiguous token" or similar error, set to 0 and flag for review.)
+    *   `is_poe_capable`: integer | null (**Prioritize explicit value from metadata.** If absent/null in metadata, infer from log: `1` if PoE evident (e.g. `show poe ports` has data), `0` if logs explicitly state no PoE capability (e.g. "No PoE port support"), `null` if uncertain.)
+    *   `handles_internal_vlans`: integer (0 or 1. REVISED LOGIC: See Section VI.)
+    *   `user_verified_total_ports`: integer | null (From meta.json. If not, derive via Combo Port Rule, **MUST flag for review**. Null if unavil/cannot derive.)
+    *   `user_verified_used_ports`: integer | null (From meta.json. If not, derive from 'up'/'connected' interfaces via Combo Port Rule, **MUST flag for review**. Null if unavil/cannot derive or total_ports is null.)
+
+**`interfaces` (Array of Objects):** /* Physical/logical data ports. Exclude pure mgmt-only unless they carry production VLANs. */
+    *   `interface_name`: string (Full name from log. CRITICAL: For D-Link devices, this is typically '1:1', '1:2', '1:21', etc. Do NOT reformat to 'GigabitEthernet1/1' for D-Link if the log shows '1:1'. The example 'GigabitEthernet0/1' is for other vendors like Cisco. Prioritize native log naming. For combo ports like '1:21 (C)' and '1:21 (F)', list as a single interface '1:21' if they represent media options for the same logical port.)
+    *   `status`: string | null (Standardized per Section IV: 'up', 'down', 'admin_down'. No verbatim log values.)
+    *   `vlan`: string | null (Access: '[VLAN_ID]'. Trunk: 'trunk' or 'trunk (native [NATIVE_VLAN_ID])'. Null if N/A.)
+    *   `duplex`: string | null (Standardized per Section IV: 'full', 'half', 'auto'. If link down and config is Auto, MUST be `null`.)
+    *   `speed`: string | null (Standardized per Section IV. MUST include unit like '100M', '1000M'. If link down and config is Auto, MUST be `null`.)
+    *   `type`: string | null (Inferred: 'GigabitEthernet', 'FastEthernet', etc. from port capabilities or description. Null if unidentifiable.)
+    *   `description`: string | null (Interface description/alias. Null if none.)
+
+**`vlans` (Array of Objects):** /* Distinct VLANs from log. **Exclude** common vendor-specific default/internal VLANs (e.g., Cisco 1002-1005) **UNLESS** explicitly configured with a site-specific name AND/OR have active, site-data-carrying user ports assigned. */
+    *   `vlan_id`: integer (1-4094)
+    *   `vlan_name`: string | null (Name. Null if none.)
+    *   `status`: string | null (Standardized per Section IV: 'active', 'inactive'. Null if N/A. Do not use 'Static' or 'Dynamic' here.)
+    *   `ports_associated_text`: string | null (Verbatim port list from log. Null if not found.)
+
+**`ip_interfaces` (Array of Objects):** /* L3 interfaces (SVIs, routed ports). If multiple IPs on one interface, list PRIMARY. Flag for review if multiple IPs found, noting additional IPs in review details. */
+    *   `interface_name`: string (CRITICAL: For SVIs, MUST be 'Vlan[VLAN_ID]', e.g., 'Vlan1'. If log shows 'System' or 'default' for an IP interface tied to VLAN 1, use 'Vlan1'. For routed physical ports, use their name.)
+    *   `mac_address`: string | null (SVI MAC. **MUST be standardized to colon-separated format as per Section IV (e.g., C0:L0:N0:SE:PA:RA).** Null if not found.)
+    *   `ip_address_with_prefix`: string | null (PRIMARY IP with CIDR. Null if none.)
+    *   `status`: string | null (Standardized operational status per Section IV: 'up', 'down', 'admin_down'. No verbatim log values.)
+    *   `protocol_status`: string | null (Standardized protocol status per Section IV: 'up', 'down'. No verbatim log values like 'Enabled'.)
+    *   `is_management`: integer | null (1 if primary mgmt interface, 0 otherwise, null if uncertain.)
+
+**`arp_entries` (Array of Objects):** /* ARP (IPv4) or ND (IPv6 neighbor) entries. */
+    *   `ip_address`: string (IPv4 or IPv6. Standardize IPv6.)
+    *   `mac_address`: string | null (Standardize per Section IV. Null if incomplete.)
+    *   `interface_name`: string | null (Often SVI name like 'Vlan1'. Null if N/A.)
+    *   `vlan_id`: integer | null (VLAN ID. Null if N/A.)
+    *   `type`: string | null ('ARPA', 'SNAP'; ND: 'STALE', etc. Null if N/A.)
+    *   `age_in_seconds`: integer | null (Age in seconds. Null if '-', 'incomplete', N/A.)
+
+**`routes` (Array of Objects):** /* Routing table entries (IPv4 & IPv6). */
+    *   `ip_version`: integer (4 or 6)
+    *   `destination_prefix`: string (CIDR notation. Standardize.)
+    *   `next_hop_ip`: string | null (CRITICAL: Must be `null` if directly connected or local route (e.g., log shows gateway 0.0.0.0). Do not use "0.0.0.0".)
+    *   `outgoing_interface`: string | null (If SVI, use standard SVI name like 'Vlan1', not 'System'. Null if N/A.)
+    *   `metric`: integer | null (Null if N/A.)
+    *   `protocol`: string | null (Standardized: 'Static', 'Connected', etc. Null if N/A.)
+    *   `is_default_route`: integer (1 if default (0.0.0.0/0 or ::/0), else 0)
+
+**`neighbors` (Array of Objects):** /* LLDP/CDP neighbor entries from log. Special consolidation logic applies if both LLDP and CDP report the same neighbor on the same local port. */
+    *   **Consolidation Logic (CDP Primary with LLDP MAC Augmentation):**
+        1.  **Identify Potential Duplicates:** For a given `local_interface_name` (normalize different forms like "Gi1/0/24" and "GigabitEthernet1/0/24" to be treated as the same for matching), check if both an LLDP and a CDP advertisement are present in the log.
+        2.  **Matching Criteria:** To confirm they refer to the same remote neighbor and port, compare:
+            *   `remote_system_name`: Should be identical or highly similar.
+            *   `remote_interface_name`: Should be identical after normalization (e.g., "Gi0/2" and "GigabitEthernet0/2" are the same).
+        3.  **Consolidation Rule:** If both advertisements match the criteria:
+            *   Create **only ONE** `Neighbor` object for this neighbor.
+            *   Set `protocol_used`: **"CDP"**.
+            *   Populate `local_interface_name`, `remote_interface_name` (normalized), `remote_system_name`, `remote_mgmt_address`, and `remote_model` using the values from the **CDP advertisement**.
+            *   For `remote_device_id`:
+                *   If the corresponding LLDP advertisement provides a `remote_device_id` that is a MAC address (e.g., XX:XX:XX:XX:XX:XX), **use this LLDP MAC address (standardized to uppercase, colon-separated)** as the `remote_device_id` for the consolidated entry. This overrides the CDP `remote_device_id`.
+                *   Otherwise (LLDP MAC not available or not a MAC), use the `remote_device_id` from the CDP advertisement (standardize it if it's a MAC).
+            *   **Flag for Review:** If the `remote_device_id` was sourced from LLDP for this "CDP" entry, add an `ItemForReview` (see below for format).
+        4.  **Standard Handling:** If only LLDP or only CDP info is found for a neighbor on a local port, or if LLDP/CDP entries on the same port clearly point to different remote devices (based on system name/remote port mismatch after normalization), list them as separate entries with their respective `protocol_used` values ("LLDP" or "CDP"). No special review item for these standard cases.
+
+    *   **Fields for each `Neighbor` object:**
+        *   `local_interface_name`: string (Native port name from log, e.g., '1:3' for D-Link, 'GigabitEthernet1/0/24' for Cisco. Use normalized form if consolidated).
+        *   `protocol_used`: string ('LLDP' or 'CDP'. If consolidated as per above, it will be 'CDP').
+        *   `remote_device_id`: string (Chassis ID/Device ID. If this ID is a MAC address, it **MUST be standardized to colon-separated format as per Section IV (e.g., C0:L0:N0:SE:PA:RA).** Otherwise, use the ID as presented, unless overridden by LLDP MAC during consolidation).
+        *   `remote_interface_name`: string (Port ID/Interface Name from remote device. Use normalized form if consolidated).
+        *   `remote_system_name`: string | null (Hostname of remote device. Null if N/A).
+        *   `remote_mgmt_address`: string | null (IP address of remote device. Standardize. Null if N/A. **CRITICAL:** If a neighbor is found and this field is null/missing, flag for review unless it's an unmanaged device type where an IP is not expected, e.g. some media converters).
+        *   `remote_model`: string | null (Extract most complete and specific platform/model. Include series/family like 'CAT9K_IOSXE' if present. Null if N/A.)
+
+**`items_for_review` (Array of Objects):** /* Items needing human attention related to THIS STAGE'S fields. Ensure all derived fields (like port counts if not from metadata) or missing critical data (like neighbor mgmt IP) are flagged. Also, include flags for neighbor consolidation as specified above. */
+    *   `severity`: string ('High', 'Medium', 'Low')
+    *   `item_path`: string (Conceptual path, e.g., 'switch_details.hostname', 'vlans[1].vlan_name', 'interfaces[2].speed', 'neighbors[index_of_entry]')
+    *   `reason`: string (Concise, LLM-generated reason. **For neighbor consolidation where CDP entry is augmented by LLDP MAC ID, use exact string: "Neighbor_CDP_Entry_Augmented_With_LLDP_MAC_ID"**. Other examples: 'Log_Model_Differs_From_Metadata', 'Interface_Speed_Set_To_Null_Due_To_Down_Status_And_Auto_Config', 'User_Verified_Port_Counts_Derived_From_Log', 'Neighbor_Missing_Remote_Mgmt_IP')
+    *   `details`: string (Specific context. **For "Neighbor_CDP_Entry_Augmented_With_LLDP_MAC_ID", use format like: "Neighbor entry for local port [actual_local_interface_name] uses CDP data, but its remote_device_id was updated to MAC '[the_LLDP_MAC_address_used]' obtained from LLDP. CDP's original remote_device_id was '[CDP's_original_remote_device_id_value]'."**. Other examples: 'Metadata SN: [SN_Meta], Log SN: [SN_Log]', 'Interface 1:5 speed is Auto and link is Down, set to null.')
+
+
+VI. SPECIFIC PROCESSING RULES & LOGIC (Apply to Stage 1A Data):
+*   **Combo Port Rule** (for `user_verified_total_ports`, `user_verified_used_ports` if deriving from log):
+    *   Count physical interfaces (Ethernet, etc.) NOT part of port-channel, NOT virtual.
+    *   "Combo" ports (RJ45/SFP) count as ONE towards total physical ports. The `interfaces` array should list the logical combo port once (e.g. '1:21'), not separate entries for (C) and (F) unless the device treats them as fully distinct operational interfaces at all times.
+    *   If metadata `user_verified_total_ports` wildly differs from log-derived, flag for review.
+*   **`handles_internal_vlans` (Revised Logic with specific VLAN 1 handling):**
+    *   Set to 1 (True) if EITHER:
+        1.  An IP interface (SVI/routed port, incl. SVI for VLAN 1 if it has an IP) has an IP whose network is NOT in any `ip_range_definition` in extracted SITE_SPECIFIC_MOONID_DATA. (Excluding standard infra/unused vendor defaults).
+        2.  A VLAN ID (from `vlans` list, which excludes unused vendor defaults, incl. VLAN 1 if actively used for site data) exists AND that VLAN ID is NOT present as `vlan_id` in extracted SITE_SPECIFIC_MOONID_DATA.
+    *   Else, set to 0 (False).
+    *   Clarification for VLAN 1: Flag for review if `handles_internal_vlans` is true due to VLAN 1 usage not documented in MOONID. Provide details on the IP and MOONID involved.
+*   **Guidance on Flagging for `items_for_review` (General for Stage 1A, in addition to specific neighbor consolidation flagging):**
+    *   Metadata/Log Conflicts for `switch_details` fields.
+    *   Ambiguity/Incompleteness for any Stage 1A field.
+    *   Multiple IPs on one SVI: List primary in `ip_interfaces[].ip_address_with_prefix` and flag for review, noting other IPs in `items_for_review[].details`.
+    *   **CRITICAL:** If `user_verified_total_ports` or `user_verified_used_ports` are derived from the log (i.e., not present in metadata), they MUST be flagged in `items_for_review` with reason `User_Verified_Port_Counts_Derived_From_Log`.
+    *   **CRITICAL:** If a neighbor is found via LLDP/CDP but its `remote_mgmt_address` is missing or not extractable (and it's not a device type where an IP is unexpected), this MUST be flagged in `items_for_review` with reason `Neighbor_Missing_Remote_Mgmt_IP`.
+    *   `reason` in `items_for_review` should be concise, LLM-derived.

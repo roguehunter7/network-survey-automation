@@ -1,0 +1,99 @@
+
+sw-a2-014#terminal length 0
+sw-a2-014#show version
+CS-3300-48G uptime is 12 weeks, 3 days
+System returned to ROM by reload
+System image file is "flash:/images/CS-3300-48G
+
+sw-a2-014#show interfaces status
+Port      Name      Status       Vlan       Duplex  Speed Type
+Gi1/0/1              notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/2              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/3              notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/4              notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/5              notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/6              connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/7              notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/8              connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/9              notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/10             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/11             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/12             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/13             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/14             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/15             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/16             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/17             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/18             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/19             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/20             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/21             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/22             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/23             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/24             notconnect   trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/25             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/26             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/27             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/28             notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/29             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/30             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/31             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/32             notconnect   20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/33             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/34             connected    10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/35             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/36             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/37             notconnect   1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/38             connected    20         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/39             connected    trunk      a-full  a-1000 10/100/1000BaseTX
+Gi1/0/40             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/41             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/42             notconnect   10         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/43             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/44             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/45             connected    1          a-full  a-1000 10/100/1000BaseTX
+Gi1/0/46             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/47             connected    30         a-full  a-1000 10/100/1000BaseTX
+Gi1/0/48             notconnect   30         a-full  a-1000 10/100/1000BaseTX
+
+sw-a2-014#show vlan
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/1, Gi1/0/2
+10   DATA                             active    Gi1/0/7, Gi1/0/8
+20   VOICE                            active    Gi1/0/9
+
+sw-a2-014#show mac address-table count
+Dynamic Address Counts:
+  Total Mac Addresses for this criterion: 170
+
+sw-a2-014#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  203.0.113.5        YES NVRAM  up                    up
+Vlan10                 198.18.59.1      YES NVRAM  up                    up
+
+sw-a2-014#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  198.18.32.140     103     02000004aab5  ARPA   Vlan10
+Internet  198.18.54.25        0     02000004aab6  ARPA   Vlan10
+Internet  198.18.59.29      112     02000004aab7  ARPA   Vlan10
+Internet  198.18.1.84      105     02000004aab8  ARPA   Vlan10
+Internet  198.18.57.19      116     02000004aab9  ARPA   Vlan10
+
+sw-a2-014#show ip route
+Gateway of last resort is 203.0.113.5 to network 0.0.0.0
+S*    0.0.0.0/0 [1/0] via 203.0.113.5
+C     198.18.0.0/24 is directly connected, Vlan10
+
+sw-a2-014#show cdp neighbors detail
+Device ID: SW-NEIGHBOUR.example.lab
+  IP address: 203.0.113.5
+  Platform: CS-3300-48G, Capabilities: Switch
+  Interface: GigabitEthernet1/0/1, Port ID (outgoing port): GigabitEthernet1/0/24
+
+sw-a2-014#show lldp neighbors detail
+Chassis id: 0200.0000.00aa
+System Name: sw-peer.example.lab
+Management Addresses: 203.0.113.5
+
+sw-a2-014#

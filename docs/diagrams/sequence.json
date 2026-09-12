@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Staged LLM Extraction - Per-Device Sequence",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1720,
+      1180
+    ],
+    "column_fit": "spread",
+    "views": [
+      {
+        "id": "capture",
+        "label": "Capture and package",
+        "focus": [
+          "tech",
+          "gui",
+          "store",
+          "orch"
+        ],
+        "note": "Field capture, then the processor reads the device package."
+      },
+      {
+        "id": "stages",
+        "label": "Three staged prompts",
+        "focus": [
+          "orch",
+          "gem",
+          "val"
+        ],
+        "note": "1A fields, 1B association, Stage 2 MAC batches, each schema-validated."
+      },
+      {
+        "id": "assure",
+        "label": "Assure and load",
+        "focus": [
+          "val",
+          "review",
+          "orch",
+          "db"
+        ],
+        "note": "Flagged items are reviewed before the record is loaded."
+      }
+    ]
+  },
+  "participants": [
+    {
+      "id": "tech",
+      "type": "external",
+      "label": "Technician",
+      "sublabel": "console session"
+    },
+    {
+      "id": "gui",
+      "type": "frontend",
+      "label": "Survey GUI",
+      "sublabel": "wave 1 + 2"
+    },
+    {
+      "id": "store",
+      "type": "database",
+      "label": "Logs + metadata",
+      "sublabel": "survey_outputs/"
+    },
+    {
+      "id": "orch",
+      "type": "backend",
+      "label": "unified_processor",
+      "sublabel": "batch + retry"
+    },
+    {
+      "id": "gem",
+      "type": "external",
+      "label": "Gemini API",
+      "sublabel": "staged prompts"
+    },
+    {
+      "id": "val",
+      "type": "security",
+      "label": "Pydantic gate",
+      "sublabel": "schema validation"
+    },
+    {
+      "id": "review",
+      "type": "frontend",
+      "label": "Review queue",
+      "sublabel": "human gate"
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "SQLite warehouse",
+      "sublabel": "16 tables"
+    }
+  ],
+  "segments": [
+    {
+      "from": 175,
+      "to": 300,
+      "label": "Capture"
+    },
+    {
+      "from": 315,
+      "to": 660,
+      "label": "Staged extraction"
+    },
+    {
+      "from": 675,
+      "to": 900,
+      "label": "Assure + load"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "tech",
+      "to": "gui",
+      "y": 190,
+      "label": "capture device + log",
+      "variant": "default"
+    },
+    {
+      "id": "m2",
+      "from": "gui",
+      "to": "store",
+      "y": 232,
+      "label": "write survey_outputs/",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m3",
+      "from": "orch",
+      "to": "store",
+      "y": 278,
+      "label": "read device package",
+      "variant": "default"
+    },
+    {
+      "id": "m4",
+      "from": "orch",
+      "to": "gem",
+      "y": 330,
+      "label": "Stage 1A - device fields",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m5",
+      "from": "gem",
+      "to": "orch",
+      "y": 372,
+      "label": "1A JSON",
+      "variant": "return"
+    },
+    {
+      "id": "m6",
+      "from": "orch",
+      "to": "val",
+      "y": 418,
+      "label": "validate 1A schema",
+      "variant": "security"
+    },
+    {
+      "id": "m7",
+      "from": "val",
+      "to": "orch",
+      "y": 456,
+      "label": "pass / schema errors",
+      "variant": "return"
+    },
+    {
+      "id": "m8",
+      "from": "orch",
+      "to": "gem",
+      "y": 505,
+      "label": "Stage 1B - MOONID association",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m9",
+      "from": "gem",
+      "to": "orch",
+      "y": 547,
+      "label": "1B JSON",
+      "variant": "return"
+    },
+    {
+      "id": "m10",
+      "from": "orch",
+      "to": "gem",
+      "y": 596,
+      "label": "Stage 2 - MAC batch N",
+      "variant": "emphasis",
+      "note": "chunked, capped, retried"
+    },
+    {
+      "id": "m11",
+      "from": "gem",
+      "to": "orch",
+      "y": 638,
+      "label": "MAC rows",
+      "variant": "return"
+    },
+    {
+      "id": "m12",
+      "from": "orch",
+      "to": "review",
+      "y": 692,
+      "label": "items_for_review (severity)",
+      "variant": "dashed"
+    },
+    {
+      "id": "m13",
+      "from": "review",
+      "to": "orch",
+      "y": 730,
+      "label": "human corrections",
+      "variant": "return"
+    },
+    {
+      "id": "m14",
+      "from": "orch",
+      "to": "db",
+      "y": 782,
+      "label": "load validated / reviewed JSON",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m15",
+      "from": "db",
+      "to": "orch",
+      "y": 822,
+      "label": "committed",
+      "variant": "return"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "gui",
+      "from": 182,
+      "to": 240,
+      "type": "frontend"
+    },
+    {
+      "participant": "store",
+      "from": 228,
+      "to": 286,
+      "type": "database"
+    },
+    {
+      "participant": "orch",
+      "from": 274,
+      "to": 830,
+      "type": "backend"
+    },
+    {
+      "participant": "gem",
+      "from": 325,
+      "to": 380,
+      "type": "external"
+    },
+    {
+      "participant": "val",
+      "from": 413,
+      "to": 462,
+      "type": "security"
+    },
+    {
+      "participant": "gem",
+      "from": 500,
+      "to": 555,
+      "type": "external"
+    },
+    {
+      "participant": "gem",
+      "from": 591,
+      "to": 646,
+      "type": "external"
+    },
+    {
+      "participant": "review",
+      "from": 687,
+      "to": 736,
+      "type": "frontend"
+    },
+    {
+      "participant": "db",
+      "from": 777,
+      "to": 828,
+      "type": "database"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Three-stage extraction",
+      "items": [
+        "Stage 1A extracts the simpler device fields",
+        "Stage 1B associates MOONIDs; Stage 2 chunks the MAC table"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Schema gate",
+      "items": [
+        "Every stage is validated before acceptance",
+        "Malformed output fails loudly and is retried"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Human in the loop",
+      "items": [
+        "Uncertainty is emitted as severity-ranked items_for_review",
+        "A human corrects before the record is loaded"
+      ]
+    }
+  ]
+}

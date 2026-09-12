@@ -1,0 +1,24 @@
+[
+  {
+    "Timestamp": "2025-06-11 15:02:00",
+    "StatusReason": "Failed Access (Port Damaged)",
+    "Site": "SITE-A",
+    "Building": "BLD-1",
+    "Floor": "Second Floor",
+    "Wing": "Nil",
+    "AreaName": "Data Centre",
+    "SpecificLocationNotes": "On shelf",
+    "RackTypeDetail": "Server",
+    "ReportedMake": "Huawei",
+    "ReportedModel": "HW-1700-24",
+    "ReportedSerialNumber": "SYNOD093036",
+    "ReportedAssetTag": "Unknown",
+    "ReportedMOONID": "MOON100006",
+    "ObservedLaptopIP": "198.18.44.105",
+    "FailureReason": "N/A",
+    "ObservedSSID": "",
+    "MACAddress": "",
+    "ReportedTotalPorts": "24",
+    "ReportedUsedPorts": "7"
+  }
+]

@@ -1,0 +1,351 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Network Survey Automation - System Architecture",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1500,
+      640
+    ],
+    "views": [
+      {
+        "id": "capture-extract",
+        "label": "Capture to structured JSON",
+        "focus": [
+          "surveyor",
+          "gui",
+          "store",
+          "processor",
+          "gemini",
+          "validated"
+        ],
+        "note": "Field capture, staged LLM extraction and schema validation."
+      },
+      {
+        "id": "analysis",
+        "label": "Warehouse to diagrams",
+        "focus": [
+          "warehouse",
+          "inference",
+          "diagrams",
+          "reporting"
+        ],
+        "note": "Topology inference, MOONID propagation and reporting."
+      },
+      {
+        "id": "review",
+        "label": "Human review gate",
+        "focus": [
+          "validated",
+          "review",
+          "warehouse"
+        ],
+        "note": "Low-confidence items are reviewed before ingestion."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "surveyor",
+      "type": "external",
+      "label": "Surveyor",
+      "sublabel": "on-site technician",
+      "pos": [
+        30,
+        300
+      ],
+      "size": [
+        120,
+        62
+      ]
+    },
+    {
+      "id": "gui",
+      "type": "frontend",
+      "label": "Survey GUI",
+      "sublabel": "Tkinter application",
+      "pos": [
+        205,
+        300
+      ],
+      "size": [
+        150,
+        62
+      ]
+    },
+    {
+      "id": "store",
+      "type": "database",
+      "label": "Logs + metadata",
+      "sublabel": "survey_outputs/",
+      "pos": [
+        400,
+        300
+      ],
+      "size": [
+        160,
+        62
+      ]
+    },
+    {
+      "id": "processor",
+      "type": "backend",
+      "label": "unified_processor",
+      "sublabel": "batch orchestration",
+      "pos": [
+        605,
+        300
+      ],
+      "size": [
+        165,
+        62
+      ]
+    },
+    {
+      "id": "gemini",
+      "type": "external",
+      "label": "Gemini API",
+      "sublabel": "staged prompts",
+      "tag": "schema-validated",
+      "pos": [
+        605,
+        110
+      ],
+      "size": [
+        165,
+        62
+      ]
+    },
+    {
+      "id": "validated",
+      "type": "database",
+      "label": "Validated JSON",
+      "sublabel": "per-device records",
+      "pos": [
+        820,
+        300
+      ],
+      "size": [
+        160,
+        62
+      ]
+    },
+    {
+      "id": "review",
+      "type": "backend",
+      "label": "Review tool",
+      "sublabel": "human gate",
+      "pos": [
+        820,
+        470
+      ],
+      "size": [
+        160,
+        62
+      ]
+    },
+    {
+      "id": "warehouse",
+      "type": "database",
+      "label": "SQLite warehouse",
+      "sublabel": "16 tables, FK + indexes",
+      "pos": [
+        1030,
+        300
+      ],
+      "size": [
+        170,
+        62
+      ]
+    },
+    {
+      "id": "inference",
+      "type": "backend",
+      "label": "Topology inference",
+      "sublabel": "roles + MOONID propagation",
+      "pos": [
+        1245,
+        300
+      ],
+      "size": [
+        200,
+        62
+      ]
+    },
+    {
+      "id": "diagrams",
+      "type": "cloud",
+      "label": "Diagrams + uplinks",
+      "sublabel": "Graphviz / Pydot",
+      "pos": [
+        1245,
+        130
+      ],
+      "size": [
+        200,
+        62
+      ]
+    },
+    {
+      "id": "reporting",
+      "type": "backend",
+      "label": "Reports",
+      "sublabel": "Excel / CSV exports",
+      "pos": [
+        1245,
+        470
+      ],
+      "size": [
+        200,
+        62
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "netsurvey package (repo)",
+      "wraps": [
+        "gui",
+        "store",
+        "processor",
+        "validated",
+        "review",
+        "warehouse",
+        "inference",
+        "diagrams",
+        "reporting"
+      ]
+    },
+    {
+      "kind": "security-group",
+      "label": "synthetic data only in public build",
+      "wraps": [
+        "store",
+        "validated",
+        "warehouse"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "c1",
+      "from": "surveyor",
+      "to": "gui",
+      "label": "captures",
+      "variant": "emphasis"
+    },
+    {
+      "id": "c2",
+      "from": "gui",
+      "to": "store",
+      "label": "writes"
+    },
+    {
+      "id": "c3",
+      "from": "store",
+      "to": "processor",
+      "label": "packages"
+    },
+    {
+      "id": "c4",
+      "from": "processor",
+      "to": "gemini",
+      "label": "staged prompts",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "c5",
+      "from": "gemini",
+      "to": "validated",
+      "label": "returns JSON",
+      "fromSide": "right",
+      "toSide": "top"
+    },
+    {
+      "id": "c6",
+      "from": "validated",
+      "to": "review",
+      "label": "review queue",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 24
+    },
+    {
+      "id": "c7",
+      "from": "review",
+      "to": "warehouse",
+      "label": "approved",
+      "fromSide": "right",
+      "toSide": "bottom"
+    },
+    {
+      "id": "c8",
+      "from": "validated",
+      "to": "warehouse",
+      "label": "load",
+      "variant": "dashed"
+    },
+    {
+      "id": "c9",
+      "from": "warehouse",
+      "to": "inference",
+      "label": "graph data",
+      "variant": "emphasis",
+      "labelDy": 55
+    },
+    {
+      "id": "c10",
+      "from": "inference",
+      "to": "diagrams",
+      "label": "renders",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "c11",
+      "from": "warehouse",
+      "to": "reporting",
+      "label": "SQL",
+      "fromSide": "bottom",
+      "toSide": "left"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Capture",
+      "items": [
+        "GUI enforces one metadata shape",
+        "Deterministic log-folder convention"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Extract",
+      "items": [
+        "Three staged prompts + Pydantic schema",
+        "Low-confidence items queued for review"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Store",
+      "items": [
+        "16-table SQLite warehouse",
+        "Foreign keys, cascades and indexes"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Analyse",
+      "items": [
+        "Role + MAC-link inference",
+        "MOONID propagation, diagrams and reports"
+      ]
+    }
+  ]
+}
