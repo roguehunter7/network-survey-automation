@@ -53,33 +53,35 @@ This project replaces that workflow with a four-part system:
 
 The diagram below is Mermaid (flowchart LR):
 
-    flowchart LR
-        subgraph Field[1. Field capture]
-            GUI[Tkinter survey GUI]
-            LOGS[Console logs + metadata]
-        end
-        subgraph Parse[2. LLM extraction]
-            UP[unified_processor]
-            GEM[gemini + Pydantic stages]
-            REV[human review tool]
-        end
-        subgraph Store[3. Warehouse]
-            DB[SQLite schema v2.16]
-        end
-        subgraph Analyse[4. Topology analysis]
-            GB[graph builder]
-            IE[inference engine]
-            MOON[MOONID propagation]
-            PYD[Pydot diagrams]
-        end
-        subgraph Report[5. Reporting]
-            XLS[Excel / CSV exports]
-        end
+```mermaid
+flowchart LR
+    subgraph Field[1. Field capture]
+        GUI[Tkinter survey GUI]
+        LOGS[Console logs + metadata]
+    end
+    subgraph Parse[2. LLM extraction]
+        UP[unified_processor]
+        GEM[gemini + Pydantic stages]
+        REV[human review tool]
+    end
+    subgraph Store[3. Warehouse]
+        DB[SQLite schema v2.16]
+    end
+    subgraph Analyse[4. Topology analysis]
+        GB[graph builder]
+        IE[inference engine]
+        MOON[MOONID propagation]
+        PYD[Pydot diagrams]
+    end
+    subgraph Report[5. Reporting]
+        XLS[Excel / CSV exports]
+    end
 
-        GUI --> LOGS --> UP --> GEM --> REV --> DB
-        DB --> GB --> IE --> MOON --> PYD
-        PYD --> DB
-        DB --> XLS
+    GUI --> LOGS --> UP --> GEM --> REV --> DB
+    DB --> GB --> IE --> MOON --> PYD
+    PYD --> DB
+    DB --> XLS
+```
 
 ## Engineering highlights
 
