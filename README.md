@@ -155,14 +155,17 @@ Start with the workbook if you want the full guided tour.
 | docs/DECISIONS.md | Why was each major choice made? (evidence-based ADR log) |
 | docs/TRACEABILITY.md | Where did every original file go? |
 | docs/SANITIZATION.md | What was removed or fabricated for public release? |
+| docs/RUNNING.md | What do I need installed to run each part? |
 | docs/TECHNICAL_REFERENCE.md | How do I operate every phase? (original runbook) |
 | docs/diagrams/ | Interactive architecture and workflow viewers (self-contained HTML) |
 | legacy/README.md | What was tried before, and why did it change? |
 
 ## Quickstart
 
-Prerequisites: Python 3.10+, Graphviz (dot) on your PATH, and on Linux the python3-tk
-package for the GUI.
+> **Setup requirements:** Python 3.10+; Graphviz (dot) on your PATH for diagram
+> generation; tkinter and a display for the GUI; a GEMINI_API_KEY only for the live LLM
+> pipeline. The demo itself needs neither an API key nor network access. Full details:
+> [docs/RUNNING.md](docs/RUNNING.md).
 
     python -m venv .venv
     source .venv/bin/activate        # Windows: .venv/Scripts/activate
